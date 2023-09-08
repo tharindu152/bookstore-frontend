@@ -1,0 +1,43 @@
+//custom css
+
+html,
+body {
+  background-color: #eee !important;
+}
+
+.login-box {
+  max-width: 450px;
+  padding: 25px 25px;
+  margin: 75px auto;
+  background-color: #fff;
+}
+
+.footer {
+  bottom: 0;
+  width: 100%;
+}
+
+.social-icon img {
+  width: 2%;
+  margin: 5px;
+}
+
+.item {
+  width: '12rem' hi;
+  margin: 10px;
+}
+
+.itemImage {
+  max-width: 50%;
+  margin: 10px auto;
+}
+
+.bookDetails img {
+  margin: 10px;
+}
+
+.navBarBtns {
+  margin-right: 10px;
+}
+
+@import '~bootstrap/scss/bootstrap';
