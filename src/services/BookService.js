@@ -18,3 +18,40 @@ export const getBooksById = async (id) => {
     console.log(error);
   }
 };
+
+export const addBook = async (data) => {
+  try {
+    const response = await axios.post('http://localhost:8081/books', data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateBooks = async (id, data) => {
+  try {
+    const response = await axios.put(`http://localhost:8081/books/${id}`, data);
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateBookCoverImage = async (id, data) => {
+  try {
+    const response = await axios.put(
+      `http://localhost:8081/bookCoverImage/${id}`,
+      data,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

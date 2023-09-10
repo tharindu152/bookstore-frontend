@@ -5,14 +5,14 @@ import { getBooksById } from '../../services/BookService';
 const Book = () => {
   const [book, setBooks] = useState(null);
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      const id = 1;
-      const response = await getBooksById(id);
-      console.log(response);
-      setBooks(response);
-    };
+  const fetchBooks = async () => {
+    const id = 2;
+    const response = await getBooksById(id);
+    // console.log(response);
+    setBooks(response);
+  };
 
+  useEffect(() => {
     fetchBooks();
   }, []);
 
@@ -24,7 +24,11 @@ const Book = () => {
       <Row className='bookDetails'>
         <Col>
           {book && (
-            <img src={require('../../resources/img/The Assassins Blade.jpg')} />
+            <img
+              className='itemImage'
+              variant='top'
+              src={`http://localhost:8081/uploads/${book.coverImage}`}
+            />
           )}
         </Col>
         {book && (

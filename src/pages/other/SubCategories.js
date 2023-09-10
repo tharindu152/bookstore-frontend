@@ -9,7 +9,7 @@ const Categories = () => {
     const fetchBooks = async () => {
       const id = 1;
       const response = await getBooksBySubCategoryId(id);
-      console.log(response);
+      // console.log(response);
       setBooks(response);
     };
 

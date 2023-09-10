@@ -29,7 +29,7 @@ const Home = () => {
                   <Card.Img
                     className='itemImage'
                     variant='top'
-                    src={require('../../resources/img/The Assassins Blade.jpg')}
+                    src={`http://localhost:8081/uploads/${book.coverImage}`}
                   />
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>

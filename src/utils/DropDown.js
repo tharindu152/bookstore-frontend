@@ -18,7 +18,7 @@ const DropDown = (props) => {
         {props.items &&
           props.items.map((item) => {
             return (
-              <Dropdown.Item eventKey={item.id}>
+              <Dropdown.Item key={item.id} onChange={props.onChange}>
                 {item.categoryName != null
                   ? item.categoryName
                   : item.subCategoryName}

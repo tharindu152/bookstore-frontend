@@ -16,13 +16,13 @@ const Layout = () => {
 
   const fetchCategories = async () => {
     const response = await getCategories();
-    console.log(response);
+    // console.log(response);
     setCategories(response);
   };
 
   const fetchSubCategories = async () => {
     const response = await getSubCategories();
-    console.log(response);
+    // console.log(response);
     setSubCategories(response);
   };
 
@@ -44,7 +44,7 @@ const Layout = () => {
                 categories.map((category) => {
                   return (
                     <NavDropdown
-                      href={`/categories/${category.id}/books`}
+                      href={`/subcategories/categories/${category.id}/books`}
                       title={category.categoryName}
                       key={category.id}
                       id='categoriesScrollingDropdown'
@@ -54,11 +54,15 @@ const Layout = () => {
                     >
                       {subCategories &&
                         subCategories.map((subCategory) => {
-                          if (subCategory.category.id == category.id) {
+                          if (subCategory.category.id === category.id) {
                             return (
                               <NavDropdown.Item
                                 key={subCategory.id}
                                 href={`/subcategories/${subCategory.id}/books`}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  console.log(e);
+                                }}
                               >
                                 {subCategory.subCategoryName}
                               </NavDropdown.Item>

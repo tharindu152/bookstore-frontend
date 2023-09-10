@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { Button, Container, FloatingLabel, Form } from 'react-bootstrap';
+import { Button, Container, FloatingLabel, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -48,6 +48,8 @@ const Login = () => {
       navigate('/');
     } catch (error) {
       setError('Username or Password is wrong');
+      setUsername('');
+      setPassword('');
     }
   };
 
@@ -85,18 +87,23 @@ const Login = () => {
               />
             </FloatingLabel>
 
-            {error && <div className='text-danger mb-3'>{error}</div>}
-
             <Button variant='primary' type='submit'>
               Login
             </Button>
           </Form>
         </div>
       </Container>
-      <p>If you do not have a user accout please register before loging in</p>
-      <Button variant='primary' href='/register'>
-        Register
-      </Button>
+      {error && (
+        <Alert key='danger' variant='danger'>
+          {error}
+          <p>
+            If you do not have a user accout please register before loging in
+          </p>
+          <Button variant='primary' href='/register'>
+            Register
+          </Button>
+        </Alert>
+      )}
     </>
   );
 };
