@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 import DropDown from './DropDown';
-import {
-  addBook,
-  updateBook,
-  updateBookCoverImage,
-  updateBooks,
-} from '../services/BookService';
+import { addBook, updateBookCoverImage } from '../services/BookService';
 
 function AddBookModal(props) {
   const [title, setTitle] = useState(null);
@@ -20,6 +15,8 @@ function AddBookModal(props) {
   const [category, setCategory] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
 
+  let id = 0;
+
   const handleFileChange = (event) => {
     setCoverImage(event.target.files[0]);
   };
@@ -31,35 +28,31 @@ function AddBookModal(props) {
       title: title,
       author: author,
       description: description,
-      isbn10: isbn10,
       price: price,
       quantity: quantity,
-      featured: featured,
+      featured: false,
       subCategory: {
-        id: subCategory,
+        id: 1,
         category: {
-          id: category,
+          id: 1,
         },
       },
+      isbn10: isbn10,
     };
 
     const coverImageData = {
       coverImage: coverImage,
     };
 
+    console.log(coverImage);
+
     console.log(data);
 
-    const id = 13;
-    const resBookCreate = await updateBooks(id, data);
-    // const id = resBookCreate.id;
-    const response2 = await updateBookCoverImage(id, coverImageData);
+    const resBookCreate = await addBook(data);
+    id = resBookCreate.id;
 
-    // console.log(resBookCreate);
+    const resCoverImgCreate = await updateBookCoverImage(id, coverImageData);
   };
-
-  // useEffect(() => {
-  //   handleUpload();
-  // }, []);
 
   return (
     <Modal
