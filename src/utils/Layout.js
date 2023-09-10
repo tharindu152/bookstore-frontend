@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { Container, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { getCategories } from '../services/CategoryService';
@@ -35,22 +35,17 @@ const Layout = () => {
     <div>
       <Navbar expand='lg' className='bg-body-tertiary' sticky='top'>
         <Container>
-          <Navbar.Brand href='#'>Readers Nest</Navbar.Brand>
+          <Navbar.Brand href='/'>Readers Nest</Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='me-auto my-2 my-lg-0'>
-              <Nav.Link href='/'>Home</Nav.Link>
               {categories &&
                 categories.map((category) => {
                   return (
                     <NavDropdown
-                      href={`/subcategories/categories/${category.id}/books`}
                       title={category.categoryName}
                       key={category.id}
                       id='categoriesScrollingDropdown'
-                      onClick={(e) => {
-                        console.log(e);
-                      }}
                     >
                       {subCategories &&
                         subCategories.map((subCategory) => {
@@ -59,10 +54,6 @@ const Layout = () => {
                               <NavDropdown.Item
                                 key={subCategory.id}
                                 href={`/subcategories/${subCategory.id}/books`}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  console.log(e);
-                                }}
                               >
                                 {subCategory.subCategoryName}
                               </NavDropdown.Item>
@@ -72,8 +63,7 @@ const Layout = () => {
                     </NavDropdown>
                   );
                 })}
-              <Nav.Link href='/books/:id'>Book</Nav.Link>
-              <Nav.Link href='/cart'>Cart</Nav.Link>
+              <Nav.Link href='/cart'>🛒</Nav.Link>
               <Nav.Link href='/checkout'>CheckOut</Nav.Link>
 
               <Button

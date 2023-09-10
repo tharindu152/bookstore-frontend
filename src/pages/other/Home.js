@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Row, Col, Button, Card } from 'react-bootstrap';
 import { getBooks } from '../../services/BookService';
+import { Link } from 'react-router-dom';
+// import bodyParser from 'body-parser';
 
 const Home = () => {
   const [books, setBooks] = useState(null);
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      const response = await getBooks();
-      // console.log(response);
-      setBooks(response);
-    };
+  const fetchBooks = async () => {
+    const response = await getBooks();
+    setBooks(response);
+  };
 
+  useEffect(() => {
     fetchBooks();
   }, []);
 
@@ -19,8 +20,8 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Books</h1>
-      <Row>
+      <h1>Start buying</h1>
+      <Row className='justify-content-md-center'>
         {books &&
           books.map((book) => {
             return (
@@ -29,10 +30,12 @@ const Home = () => {
                   <Card.Img
                     className='itemImage'
                     variant='top'
+                    value={book.id}
                     src={`http://localhost:8081/uploads/${book.coverImage}`}
                   />
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
+                    <Link to={`/books/${book.id}`}>More Details</Link>
                     <Card.Text>By: {book.author}</Card.Text>
                     <Card.Text>
                       Category: {book.subCategory.category.categoryName}
@@ -43,9 +46,10 @@ const Home = () => {
                     {/* <Card.Text>{book.description}</Card.Text> */}
                     <Card.Text>Rs. {book.price}</Card.Text>
                     <Button
+                      href='/cart'
                       variant='primary'
-                      onClick={() => {
-                        handleOrder(book);
+                      onClick={(e) => {
+                        console.log(e.target.value);
                       }}
                     >
                       Add to Cart

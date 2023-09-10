@@ -41,7 +41,9 @@ const Cart = () => {
           </tr>
         </tbody>
       </Table>
-      <Button className='btnCheckout'>PROCEED TO CHECKOUT</Button>
+      <Button className='btnCheckout' href='/checkout'>
+        PROCEED TO CHECKOUT
+      </Button>
     </div>
   );
 };

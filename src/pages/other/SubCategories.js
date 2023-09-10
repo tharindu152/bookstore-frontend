@@ -1,18 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Button, Table, Modal, Form } from 'react-bootstrap';
+import { Row, Col, Button, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { getBooksBySubCategoryId } from '../../services/SubCategoryService';
 
 const Categories = () => {
   const [books, setBooks] = useState(null);
 
-  useEffect(() => {
-    const fetchBooks = async () => {
-      const id = 1;
-      const response = await getBooksBySubCategoryId(id);
-      // console.log(response);
-      setBooks(response);
-    };
+  const pathname = window.location.pathname;
+  const id = pathname.substring(15, 16);
+  const fetchBooks = async () => {
+    const response = await getBooksBySubCategoryId(id);
+    setBooks(response);
+  };
 
+  useEffect(() => {
     fetchBooks();
   }, []);
 
@@ -20,25 +21,47 @@ const Categories = () => {
 
   return (
     <div>
-      <h1>SubCategories</h1>
-      <Row>
+      <h1>
+        {books != null
+          ? `${books[0].subCategory.category.categoryName} 👉 ${books[0].subCategory.subCategoryName}`
+          : ''}
+      </h1>
+      <Row className='justify-content-center'>
         {books &&
           books.map((book) => {
             return (
-              <Col key={book.id}>
-                <div className='item'>
-                  <h3>{book.title}</h3>
-                  <h4>Rs. {book.price}</h4>
-                  <Button
-                    variant='primary'
-                    size='sm'
-                    onClick={() => {
-                      handleOrder(book);
-                    }}
-                  >
-                    Add to Cart
-                  </Button>
-                </div>
+              <Col key={book.id} xs={6} md={4}>
+                <Card className='item'>
+                  <Card.Img
+                    className='itemImage'
+                    variant='top'
+                    value={book.id}
+                    src={`http://localhost:8081/uploads/${book.coverImage}`}
+                    href={`/books/${book.id}`}
+                  />
+                  <Card.Body>
+                    <Card.Title>{book.title}</Card.Title>
+                    <Link to={`/books/${book.id}`}>More Details</Link>
+                    <Card.Text>By: {book.author}</Card.Text>
+                    <Card.Text>
+                      Category: {book.subCategory.category.categoryName}
+                    </Card.Text>
+                    <Card.Text>
+                      Subcategory: {book.subCategory.subCategoryName}
+                    </Card.Text>
+                    {/* <Card.Text>{book.description}</Card.Text> */}
+                    <Card.Text>Rs. {book.price}</Card.Text>
+                    <Button
+                      href='/cart'
+                      variant='primary'
+                      onClick={(e) => {
+                        console.log(e.target.value);
+                      }}
+                    >
+                      Add to Cart
+                    </Button>
+                  </Card.Body>
+                </Card>
               </Col>
             );
           })}

@@ -90,8 +90,8 @@ const CheckOut = () => {
               <Form.Control type='text' placeholder='xxx-xxxxxxx' />
             </Col>
           </Form.Group>
-          <Button className='btnCheckout' type='submit'>
-            COMPLETE ORDER & CHECKOUT
+          <Button className='btnCheckout' type='submit' href='/'>
+            🛒 COMPLETE ORDER & CHECKOUT
           </Button>
         </Form>
       </div>

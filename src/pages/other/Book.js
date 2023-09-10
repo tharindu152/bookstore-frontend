@@ -6,7 +6,9 @@ const Book = () => {
   const [book, setBooks] = useState(null);
 
   const fetchBooks = async () => {
-    const id = 2;
+    const pathname = window.location.pathname;
+    const id = pathname.substring(7);
+    // console.log(id);
     const response = await getBooksById(id);
     // console.log(response);
     setBooks(response);
