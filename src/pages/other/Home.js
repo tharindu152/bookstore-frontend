@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [books, setBooks] = useState(null);
+  const [cart, setCart] = useState([]);
 
   const fetchBooks = async () => {
     const response = await getBooks();
@@ -16,7 +17,28 @@ const Home = () => {
     fetchBooks();
   }, []);
 
-  const handleOrder = () => {};
+  const handleShoppingCart = (book) => {
+    const data = [
+      {
+        id: book.id,
+        title: book.title,
+        category: book.subCategory.category.categoryName,
+        subCategory: book.subCategory.subCategoryName,
+        unitPrice: book.price,
+        quantity: book.quantity,
+      },
+    ];
+
+    const cartArr = JSON.stringify(data);
+
+    console.log(cartArr);
+
+    setCart((prevArr) => [...prevArr, cartArr]);
+
+    console.log(cart);
+
+    localStorage.setItem('cartItems', cart);
+  };
 
   return (
     <div>
@@ -46,10 +68,10 @@ const Home = () => {
                     {/* <Card.Text>{book.description}</Card.Text> */}
                     <Card.Text>Rs. {book.price}</Card.Text>
                     <Button
-                      href='/cart'
                       variant='primary'
                       onClick={(e) => {
-                        console.log(e.target.value);
+                        e.preventDefault();
+                        handleShoppingCart(book);
                       }}
                     >
                       Add to Cart

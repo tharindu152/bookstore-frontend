@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table, Form, Row, Col } from 'react-bootstrap';
 
 const CheckOut = () => {
+  const [cart, setCart] = useState(null);
+
+  useEffect(() => {
+    const cartItemsArr = [localStorage.getItem('cartItems')];
+    const items = JSON.parse(cartItemsArr);
+    setCart(items);
+  }, []);
+
   return (
     <div>
       <h1>CheckOut</h1>
@@ -15,12 +23,16 @@ const CheckOut = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td colSpan={2}>Assasins</td>
-            <td>250.25</td>
-            <td>2</td>
-            <td>{250.25 * 2}</td>
-          </tr>
+          {cart &&
+            cart.map((book) => {
+              <tr key={book.id}>
+                <td colSpan={2}>{book.title}</td>
+                <td>{book.unitPrice}</td>
+                <td>{book.quantity}</td>
+                <td>{book.unitPrice * book.quantity}</td>
+              </tr>;
+            })}
+
           <tr>
             <td colSpan={4}>VAT</td>
             <td>{(500.5 * 0.05).toFixed(2)}</td>

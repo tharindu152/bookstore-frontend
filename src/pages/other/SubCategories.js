@@ -8,6 +8,7 @@ const Categories = () => {
 
   const pathname = window.location.pathname;
   const id = pathname.substring(15, 16);
+
   const fetchBooks = async () => {
     const response = await getBooksBySubCategoryId(id);
     setBooks(response);

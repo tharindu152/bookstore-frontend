@@ -57,7 +57,7 @@ const Book = () => {
         )}
       </Row>
       <Button variant='primary' size='sm' href='/cart'>
-        View to Cart
+        View Cart
       </Button>
     </div>
   );
