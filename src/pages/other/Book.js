@@ -4,18 +4,36 @@ import { getBooksById } from '../../services/BookService';
 
 const Book = () => {
   const [book, setBooks] = useState(null);
+  const [cart, setCart] = useState([]);
 
   const fetchBooks = async () => {
     const pathname = window.location.pathname;
     const id = pathname.substring(7);
-    // console.log(id);
     const response = await getBooksById(id);
-    // console.log(response);
     setBooks(response);
+  };
+
+  const handleShoppingCart = (book) => {
+    const data = {
+      id: book.id,
+      title: book.title,
+      category: book.subCategory.category.categoryName,
+      subCategory: book.subCategory.subCategoryName,
+      unitPrice: book.price,
+      quantity: book.quantity,
+    };
+
+    setCart((prevArr) => {
+      const cartItems = [...prevArr, data];
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      return cartItems;
+    });
   };
 
   useEffect(() => {
     fetchBooks();
+    const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
+    setCart(cartItemsArr);
   }, []);
 
   const handleOrder = () => {};
@@ -45,9 +63,8 @@ const Book = () => {
               <h4>Qty available: {book.quantity}</h4>
               <Button
                 variant='primary'
-                size='sm'
-                onClick={() => {
-                  handleOrder(book);
+                onClick={(e) => {
+                  handleShoppingCart(book);
                 }}
               >
                 Add to Cart

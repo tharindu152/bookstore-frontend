@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const [finalTotal, setFinalTotal] = useState(0);
 
-  // const calculateVAT = (finalTotal) => {
-  //   return (finalTotal * 0.06).toFixed(2);
-  // };
+  const increaseQuantity = () => {
+    setQuantity(quantity + 1);
+  };
 
-  // const calculateFinalTotal = (book) => {
-  //   setFinalTotal((prevValue) => (prevValue += book.unitPrice * book.quantity));
-  // };
+  const decreaseQuantity = () => {
+    setQuantity(quantity - 1);
+  };
 
   useEffect(() => {
-    const cartItemsArr = [localStorage.getItem('cartItems')];
-    const items = JSON.parse(cartItemsArr);
-    setCart(items);
-    console.log(items);
+    const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
+    setCart(cartItemsArr);
   }, []);
+
+  // console.log(cart);
+
+  // console.log(cart.splice(0, 1));
 
   return (
     <div>
@@ -26,41 +29,63 @@ const Cart = () => {
       <Table striped bordered hover>
         <thead>
           <tr>
-            {/* <th></th> */}
+            <th></th>
             <th colSpan={2}>Product</th>
             <th>Category</th>
             <th>Sub Category</th>
             <th>Unit Price</th>
-            <th>Qty</th>
-            <th>Sub Total</th>
+            <th colSpan={2}>Qty</th>
+            <th colSpan={2}>Sub Total</th>
           </tr>
         </thead>
         <tbody>
           {cart &&
-            cart.map((book) => {
+            cart.map((book, i) => {
               return (
                 <tr key={book.id}>
-                  {/* <td>
-                    <Button variant='outline-danger' size='sm'>
-                      X
+                  <td>
+                    <Button
+                      onClick={() => {
+                        cart.splice(i, 1);
+                        localStorage.setItem('cartItems', JSON.stringify(cart));
+                        window.location.reload();
+                      }}
+                      variant='outline-danger'
+                      size='sm'
+                    >
+                      ✕
                     </Button>
-                  </td> */}
+                  </td>
                   <td colSpan={2}>{book.title}</td>
                   <td>{book.category}</td>
                   <td>{book.subCategory}</td>
                   <td>{book.unitPrice}</td>
-                  <td>{book.quantity}</td>
-                  <td>{book.unitPrice * book.quantity}</td>
-                  {/* {calculateFinalTotal(book)} */}
+                  <td>{quantity}</td>
+                  <td>
+                    <ButtonToolbar
+                      className='btnToolBarIncDec'
+                      aria-label='Toolbar with button groups'
+                    >
+                      <ButtonGroup className='btngpIncDec'>
+                        <Button variant='secondary' onClick={decreaseQuantity}>
+                          -
+                        </Button>{' '}
+                        <Button variant='dark' onClick={increaseQuantity}>
+                          +
+                        </Button>
+                      </ButtonGroup>
+                    </ButtonToolbar>
+                  </td>
+                  <td colSpan={2}>{quantity * book.unitPrice}</td>
                 </tr>
               );
             })}
           <tr>
-            <td colSpan={6}>VAT 6%</td>
+            <td colSpan={8}>VAT 6%</td>
             <td>{(500.5 * 0.05).toFixed(2)}</td>
           </tr>
           <tr>
-            <td colSpan={6}>Final Total</td>
+            <td colSpan={8}>Final Total</td>
             <td>{525.53}</td>
           </tr>
         </tbody>

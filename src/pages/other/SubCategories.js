@@ -5,6 +5,7 @@ import { getBooksBySubCategoryId } from '../../services/SubCategoryService';
 
 const Categories = () => {
   const [books, setBooks] = useState(null);
+  const [cart, setCart] = useState([]);
 
   const pathname = window.location.pathname;
   const id = pathname.substring(15, 16);
@@ -14,8 +15,27 @@ const Categories = () => {
     setBooks(response);
   };
 
+  const handleShoppingCart = (book) => {
+    const data = {
+      id: book.id,
+      title: book.title,
+      category: book.subCategory.category.categoryName,
+      subCategory: book.subCategory.subCategoryName,
+      unitPrice: book.price,
+      quantity: book.quantity,
+    };
+
+    setCart((prevArr) => {
+      const cartItems = [...prevArr, data];
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      return cartItems;
+    });
+  };
+
   useEffect(() => {
     fetchBooks();
+    const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
+    setCart(cartItemsArr);
   }, []);
 
   const handleOrder = () => {};
@@ -53,10 +73,9 @@ const Categories = () => {
                     {/* <Card.Text>{book.description}</Card.Text> */}
                     <Card.Text>Rs. {book.price}</Card.Text>
                     <Button
-                      href='/cart'
                       variant='primary'
                       onClick={(e) => {
-                        console.log(e.target.value);
+                        handleShoppingCart(book);
                       }}
                     >
                       Add to Cart

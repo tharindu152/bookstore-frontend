@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Container, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { getCategories } from '../services/CategoryService';
@@ -8,6 +8,8 @@ import AddBookModal from './AddBookModal';
 import navIcon1 from '../resources/img/nav-icon1.svg';
 import navIcon2 from '../resources/img/nav-icon2.svg';
 import navIcon3 from '../resources/img/nav-icon3.svg';
+import shoppingCart from '../resources/img/Shopping_Cart-removebg-preview.png';
+import logo from '../resources/img/Logo-removebg-preview.png';
 
 const Layout = () => {
   const [categories, setCategories] = useState(null);
@@ -33,9 +35,15 @@ const Layout = () => {
 
   return (
     <div>
-      <Navbar expand='lg' className='bg-body-tertiary' sticky='top'>
+      <Navbar
+        expand='lg'
+        className='bg-body-tertiary navbarContainer'
+        sticky='top'
+      >
         <Container>
-          <Navbar.Brand href='/'>Readers Nest</Navbar.Brand>
+          <Navbar.Brand href='/'>
+            <img src={logo} alt='Icon' style={{ width: '10rem' }} />
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='me-auto my-2 my-lg-0'>
@@ -63,7 +71,9 @@ const Layout = () => {
                     </NavDropdown>
                   );
                 })}
-              <Nav.Link href='/cart'>🛒</Nav.Link>
+              <Nav.Link href='/cart'>
+                <img src={shoppingCart} alt='Icon' style={{ width: '2rem' }} />
+              </Nav.Link>
               <Nav.Link href='/checkout'>CheckOut</Nav.Link>
 
               <Button

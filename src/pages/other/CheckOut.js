@@ -5,10 +5,12 @@ const CheckOut = () => {
   const [cart, setCart] = useState(null);
 
   useEffect(() => {
-    const cartItemsArr = [localStorage.getItem('cartItems')];
-    const items = JSON.parse(cartItemsArr);
-    setCart(items);
+    const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
+    console.log(cartItemsArr[0]);
+    setCart(cartItemsArr);
   }, []);
+
+  console.log(cart);
 
   return (
     <div>
@@ -25,12 +27,14 @@ const CheckOut = () => {
         <tbody>
           {cart &&
             cart.map((book) => {
-              <tr key={book.id}>
-                <td colSpan={2}>{book.title}</td>
-                <td>{book.unitPrice}</td>
-                <td>{book.quantity}</td>
-                <td>{book.unitPrice * book.quantity}</td>
-              </tr>;
+              return (
+                <tr key={book.id}>
+                  <td colSpan={2}>{book.title}</td>
+                  <td>{book.unitPrice}</td>
+                  <td>{book.quantity}</td>
+                  <td>{book.unitPrice * book.quantity}</td>
+                </tr>
+              );
             })}
 
           <tr>

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Row, Col, Button, Card } from 'react-bootstrap';
 import { getBooks } from '../../services/BookService';
 import { Link } from 'react-router-dom';
-// import bodyParser from 'body-parser';
 
 const Home = () => {
   const [books, setBooks] = useState(null);
@@ -13,32 +12,28 @@ const Home = () => {
     setBooks(response);
   };
 
+  const handleShoppingCart = (book) => {
+    const data = {
+      id: book.id,
+      title: book.title,
+      category: book.subCategory.category.categoryName,
+      subCategory: book.subCategory.subCategoryName,
+      unitPrice: book.price,
+      quantity: book.quantity,
+    };
+
+    setCart((prevArr) => {
+      const cartItems = [...prevArr, data];
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      return cartItems;
+    });
+  };
+
   useEffect(() => {
     fetchBooks();
+    const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
+    setCart(cartItemsArr);
   }, []);
-
-  const handleShoppingCart = (book) => {
-    const data = [
-      {
-        id: book.id,
-        title: book.title,
-        category: book.subCategory.category.categoryName,
-        subCategory: book.subCategory.subCategoryName,
-        unitPrice: book.price,
-        quantity: book.quantity,
-      },
-    ];
-
-    const cartArr = JSON.stringify(data);
-
-    console.log(cartArr);
-
-    setCart((prevArr) => [...prevArr, cartArr]);
-
-    console.log(cart);
-
-    localStorage.setItem('cartItems', cart);
-  };
 
   return (
     <div>
@@ -70,7 +65,6 @@ const Home = () => {
                     <Button
                       variant='primary'
                       onClick={(e) => {
-                        e.preventDefault();
                         handleShoppingCart(book);
                       }}
                     >

@@ -1,8 +1,6 @@
 //custom css
 * {
   // font-family: 'Montserrat', sans-serif;
-  // font-family: 'Ubuntu', sans-serif;
-  // font-family: 'Merriweather', serif;
 }
 
 html,
@@ -28,7 +26,7 @@ body {
 }
 
 .item {
-  width: '12rem' hi;
+  width: '12rem';
   margin: 10px;
 }
 
@@ -41,12 +39,16 @@ body {
   margin: 10px;
 }
 
-.bookContainer {
+.btnToolBarIncDec {
+  width: min-content;
+  margin: auto;
 }
 
-.navBarBtns {
-  margin-right: 10px;
-  margin-bottom: 2px;
+.navbarContainer {
+  .navBarBtns {
+    margin-right: 10px;
+    margin-bottom: 2px;
+  }
 }
 
 @import '~bootstrap/scss/bootstrap';
