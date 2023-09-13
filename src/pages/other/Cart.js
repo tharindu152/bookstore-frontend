@@ -7,7 +7,11 @@ const Cart = () => {
 
   useEffect(() => {
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
-    setCart(cartItemsArr);
+    setCart(
+      cartItemsArr.map((book) => {
+        return { ...book, qty: book.quantity };
+      })
+    );
   }, []);
 
   return (
@@ -28,6 +32,7 @@ const Cart = () => {
         <tbody>
           {cart &&
             cart.map((book, i) => {
+              const q = book.quantity;
               return (
                 <tr key={i}>
                   <td>
@@ -47,7 +52,7 @@ const Cart = () => {
                   <td>{book.category}</td>
                   <td>{book.subCategory}</td>
                   <td>{book.unitPrice}</td>
-                  <td>{book.quantity}</td>
+                  <td>{book.qty}</td>
                   <td>
                     <ButtonToolbar
                       className='btnToolBarIncDec'
@@ -59,8 +64,8 @@ const Cart = () => {
                           onClick={() => {
                             setCart(
                               cart.map((b) => {
-                                if (b == book) {
-                                  b.quantity--;
+                                if (b == book && b.qty > 1) {
+                                  b.qty--;
                                 }
                                 return b;
                               })
@@ -74,8 +79,8 @@ const Cart = () => {
                           onClick={() => {
                             setCart(
                               cart.map((b) => {
-                                if (b == book) {
-                                  b.quantity++;
+                                if (b == book && b.qty < b.quantity) {
+                                  b.qty++;
                                 }
                                 return b;
                               })
