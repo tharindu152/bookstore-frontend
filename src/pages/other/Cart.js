@@ -3,25 +3,12 @@ import { Button, Table, ButtonGroup, ButtonToolbar } from 'react-bootstrap';
 
 const Cart = () => {
   const [cart, setCart] = useState(null);
-  const [quantity, setQuantity] = useState(1);
   const [finalTotal, setFinalTotal] = useState(0);
-
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-
-  const decreaseQuantity = () => {
-    setQuantity(quantity - 1);
-  };
 
   useEffect(() => {
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
     setCart(cartItemsArr);
   }, []);
-
-  // console.log(cart);
-
-  // console.log(cart.splice(0, 1));
 
   return (
     <div>
@@ -42,7 +29,7 @@ const Cart = () => {
           {cart &&
             cart.map((book, i) => {
               return (
-                <tr key={book.id}>
+                <tr key={i}>
                   <td>
                     <Button
                       onClick={() => {
@@ -60,23 +47,47 @@ const Cart = () => {
                   <td>{book.category}</td>
                   <td>{book.subCategory}</td>
                   <td>{book.unitPrice}</td>
-                  <td>{quantity}</td>
+                  <td>{book.quantity}</td>
                   <td>
                     <ButtonToolbar
                       className='btnToolBarIncDec'
                       aria-label='Toolbar with button groups'
                     >
                       <ButtonGroup className='btngpIncDec'>
-                        <Button variant='secondary' onClick={decreaseQuantity}>
+                        <Button
+                          variant='secondary'
+                          onClick={() => {
+                            setCart(
+                              cart.map((b) => {
+                                if (b == book) {
+                                  b.quantity--;
+                                }
+                                return b;
+                              })
+                            );
+                          }}
+                        >
                           -
                         </Button>{' '}
-                        <Button variant='dark' onClick={increaseQuantity}>
+                        <Button
+                          variant='dark'
+                          onClick={() => {
+                            setCart(
+                              cart.map((b) => {
+                                if (b == book) {
+                                  b.quantity++;
+                                }
+                                return b;
+                              })
+                            );
+                          }}
+                        >
                           +
                         </Button>
                       </ButtonGroup>
                     </ButtonToolbar>
                   </td>
-                  <td colSpan={2}>{quantity * book.unitPrice}</td>
+                  <td colSpan={2}>{book.quantity * book.unitPrice}</td>
                 </tr>
               );
             })}
