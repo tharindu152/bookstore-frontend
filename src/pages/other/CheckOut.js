@@ -3,6 +3,28 @@ import { Button, Table, Form, Row, Col } from 'react-bootstrap';
 
 const CheckOut = () => {
   const [cart, setCart] = useState(null);
+  const [fullName, setFullName] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [street, setStreet] = useState(null);
+  const [city, setCity] = useState(null);
+  const [state, setState] = useState(null);
+  const [zipCode, setZipCode] = useState(null);
+  const [phone, setPhone] = useState(null);
+
+  const handleUserDetails = (event) => {
+    event.preventDefault();
+    const data = {
+      fullName: fullName,
+      country: country,
+      street: street,
+      city: city,
+      state: state,
+      zipCode: zipCode,
+      phone: phone,
+    };
+
+    console.log(data);
+  };
 
   useEffect(() => {
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
@@ -49,13 +71,17 @@ const CheckOut = () => {
       </Table>
       <div className='shippingDetails'>
         <h4>Please enter your shipping Details</h4>
-        <Form>
+        <Form onSubmit={handleUserDetails}>
           <Form.Group as={Row} className='mb-3' controlId='formPlaintextEmail'>
             <Form.Label column sm='2'>
               Full Name
             </Form.Label>
             <Col sm='10'>
-              <Form.Control type='text' placeholder='ABC John' />
+              <Form.Control
+                type='text'
+                placeholder='ABC John'
+                onChange={(e) => setFullName(e.target.value)}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className='mb-3' controlId='formPlaintextEmail'>
@@ -63,7 +89,11 @@ const CheckOut = () => {
               Country
             </Form.Label>
             <Col sm='10'>
-              <Form.Control type='text' placeholder='Country' />
+              <Form.Control
+                type='text'
+                placeholder='Country'
+                onChange={(e) => setCountry(e.target.value)}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className='mb-3' controlId='formPlaintextEmail'>
@@ -71,7 +101,11 @@ const CheckOut = () => {
               Street Address
             </Form.Label>
             <Col sm='10'>
-              <Form.Control type='text' placeholder='Street' />
+              <Form.Control
+                type='text'
+                placeholder='Street'
+                onChange={(e) => setStreet(e.target.value)}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className='mb-3' controlId='formPlaintextEmail'>
@@ -79,7 +113,11 @@ const CheckOut = () => {
               Town/ City
             </Form.Label>
             <Col sm='10'>
-              <Form.Control type='text' placeholder='Town/ City' />
+              <Form.Control
+                type='text'
+                placeholder='Town/ City'
+                onChange={(e) => setCity(e.target.value)}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className='mb-3' controlId='formPlaintextEmail'>
@@ -87,7 +125,11 @@ const CheckOut = () => {
               State
             </Form.Label>
             <Col sm='10'>
-              <Form.Control type='text' placeholder='State' />
+              <Form.Control
+                type='text'
+                placeholder='State'
+                onChange={(e) => setState(e.target.value)}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className='mb-3' controlId='formPlaintextEmail'>
@@ -95,7 +137,11 @@ const CheckOut = () => {
               Zip Code
             </Form.Label>
             <Col sm='10'>
-              <Form.Control type='text' placeholder='xxxxx' />
+              <Form.Control
+                type='text'
+                placeholder='xxxxx'
+                onChange={(e) => setZipCode(e.target.value)}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} className='mb-3' controlId='formPlaintextEmail'>
@@ -103,10 +149,14 @@ const CheckOut = () => {
               Phone
             </Form.Label>
             <Col sm='10'>
-              <Form.Control type='text' placeholder='xxx-xxxxxxx' />
+              <Form.Control
+                type='text'
+                placeholder='xxx-xxxxxxx'
+                onChange={(e) => setPhone(e.target.value)}
+              />
             </Col>
           </Form.Group>
-          <Button className='btnCheckout' type='submit' href='/'>
+          <Button className='btnCheckout' type='submit'>
             🛒 COMPLETE ORDER & CHECKOUT
           </Button>
         </Form>
