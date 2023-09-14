@@ -5,6 +5,16 @@ const Cart = () => {
   const [cart, setCart] = useState(null);
   const [finalTotal, setFinalTotal] = useState(0);
 
+  const cartRefresh = (cart) => {
+    localStorage.setItem('cartItems', JSON.stringify(cart));
+    const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
+    setCart(
+      cartItemsArr.map((book) => {
+        return { ...book };
+      })
+    );
+  };
+
   useEffect(() => {
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
     setCart(
@@ -45,8 +55,7 @@ const Cart = () => {
                     <Button
                       onClick={() => {
                         cart.splice(i, 1);
-                        localStorage.setItem('cartItems', JSON.stringify(cart));
-                        window.location.reload();
+                        cartRefresh(cart);
                       }}
                       variant='outline-danger'
                       size='sm'
@@ -78,16 +87,7 @@ const Cart = () => {
                                 return b;
                               })
                             );
-
-                            setFinalTotal((prevValue) => {
-                              cart.reduce(
-                                (total, book) =>
-                                  parseInt((total += book.subTotal)),
-                                prevValue
-                              );
-                            });
-
-                            console.log(finalTotal);
+                            cartRefresh(cart);
                           }}
                         >
                           -
@@ -105,16 +105,7 @@ const Cart = () => {
                                 return b;
                               })
                             );
-
-                            setFinalTotal((prevValue) => {
-                              cart.reduce(
-                                (total, book) =>
-                                  parseInt((total += book.subTotal)),
-                                prevValue
-                              );
-                            });
-
-                            console.log(finalTotal);
+                            cartRefresh(cart);
                           }}
                         >
                           +

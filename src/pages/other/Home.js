@@ -16,7 +16,7 @@ const Home = () => {
 
   const handleShoppingCart = (book) => {
     if (cart.findIndex((b) => b.id == book.id) != -1) {
-      alert('Already exits');
+      alert('Book is already added to the cart');
       return;
     }
 
@@ -28,22 +28,7 @@ const Home = () => {
       unitPrice: book.price,
       quantity: book.quantity,
     };
-    // cart.forEach((b) => {
-    //   if (b.id !== book) {
-    //     data = {
-    //       id: book.id,
-    //       title: book.title,
-    //       category: book.subCategory.category.categoryName,
-    //       subCategory: book.subCategory.subCategoryName,
-    //       unitPrice: book.price,
-    //       quantity: book.quantity,
-    //     };
-    //   } else {
-    //     <Alert key='danger' variant='danger'>
-    //       <p>Item already exist in th ecart</p>
-    //     </Alert>;
-    //   }
-    // });
+
     setCart((prevArr) => {
       const cartItems = [...prevArr, data];
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
