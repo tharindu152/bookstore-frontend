@@ -60,7 +60,7 @@ const Home = () => {
                     <Card.Text>
                       Subcategory: {book.subCategory.subCategoryName}
                     </Card.Text>
-                    {/* <Card.Text>{book.description}</Card.Text> */}
+                    <Card.Text>ISBN: {book.isbn10}</Card.Text>
                     <Card.Text>Rs. {book.price}</Card.Text>
                     <Button
                       variant='primary'

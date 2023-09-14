@@ -58,6 +58,7 @@ const Book = () => {
               <h4>Written By: {book.author}</h4>
               <h4>Category: {book.subCategory.category.categoryName}</h4>
               <h4>Subcategory: {book.subCategory.subCategoryName}</h4>
+              <h4>ISBN: {book.isbn10}</h4>
               <p>{book.description}</p>
               <h4>Rs. {book.price}</h4>
               <h4>Qty available: {book.quantity}</h4>

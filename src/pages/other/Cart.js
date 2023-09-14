@@ -9,8 +9,12 @@ const Cart = () => {
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
     setCart(
       cartItemsArr.map((book) => {
-        return { ...book, qty: book.quantity };
+        return { ...book, qty: 1, subTotal: 0 };
       })
+    );
+
+    setFinalTotal(
+      cartItemsArr.reduce((total, book) => (total += 1 * book.unitPrice), 0)
     );
   }, []);
 
@@ -32,7 +36,6 @@ const Cart = () => {
         <tbody>
           {cart &&
             cart.map((book, i) => {
-              const q = book.quantity;
               return (
                 <tr key={i}>
                   <td>
@@ -51,7 +54,7 @@ const Cart = () => {
                   <td colSpan={2}>{book.title}</td>
                   <td>{book.category}</td>
                   <td>{book.subCategory}</td>
-                  <td>{book.unitPrice}</td>
+                  <td>LKR {book.unitPrice}</td>
                   <td>{book.qty}</td>
                   <td>
                     <ButtonToolbar
@@ -61,30 +64,54 @@ const Cart = () => {
                       <ButtonGroup className='btngpIncDec'>
                         <Button
                           variant='secondary'
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.preventDefault();
                             setCart(
                               cart.map((b) => {
                                 if (b == book && b.qty > 1) {
                                   b.qty--;
+                                  b.subTotal = b.qty * b.unitPrice;
                                 }
                                 return b;
                               })
                             );
+
+                            setFinalTotal((prevValue) => {
+                              cart.reduce(
+                                (total, book) =>
+                                  parseInt((total += book.subTotal)),
+                                prevValue
+                              );
+                            });
+
+                            console.log(finalTotal);
                           }}
                         >
                           -
                         </Button>{' '}
                         <Button
                           variant='dark'
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.preventDefault();
                             setCart(
                               cart.map((b) => {
                                 if (b == book && b.qty < b.quantity) {
                                   b.qty++;
+                                  b.subTotal = b.qty * b.unitPrice;
                                 }
                                 return b;
                               })
                             );
+
+                            setFinalTotal((prevValue) => {
+                              cart.reduce(
+                                (total, book) =>
+                                  parseInt((total += book.subTotal)),
+                                prevValue
+                              );
+                            });
+
+                            console.log(finalTotal);
                           }}
                         >
                           +
@@ -92,17 +119,18 @@ const Cart = () => {
                       </ButtonGroup>
                     </ButtonToolbar>
                   </td>
-                  <td colSpan={2}>{book.quantity * book.unitPrice}</td>
+                  <td colSpan={2}>LKR {book.qty * book.unitPrice}</td>
+                  {}
                 </tr>
               );
             })}
           <tr>
             <td colSpan={8}>VAT 6%</td>
-            <td>{(500.5 * 0.05).toFixed(2)}</td>
+            <td>LKR {(finalTotal * 0.06).toFixed(2)}</td>
           </tr>
           <tr>
             <td colSpan={8}>Final Total</td>
-            <td>{525.53}</td>
+            <td>LKR {finalTotal}</td>
           </tr>
         </tbody>
       </Table>
