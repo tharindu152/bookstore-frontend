@@ -12,11 +12,14 @@ const Cart = () => {
         return { ...book, qty: 1, subTotal: 0 };
       })
     );
-
-    setFinalTotal(
-      cartItemsArr.reduce((total, book) => (total += 1 * book.unitPrice), 0)
-    );
   }, []);
+
+  useEffect(() => {
+    console.log(cart);
+    setFinalTotal(
+      cart?.reduce((total, book) => (total += book.qty * book.unitPrice), 0)
+    );
+  });
 
   return (
     <div>

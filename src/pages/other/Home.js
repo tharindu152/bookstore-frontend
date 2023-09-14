@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Button, Card } from 'react-bootstrap';
+import { Row, Col, Button, Card, Alert } from 'react-bootstrap';
 import { getBooks } from '../../services/BookService';
 import { Link } from 'react-router-dom';
 
@@ -12,8 +12,15 @@ const Home = () => {
     setBooks(response);
   };
 
+  let data = {};
+
   const handleShoppingCart = (book) => {
-    const data = {
+    if (cart.findIndex((b) => b.id == book.id) != -1) {
+      alert('Already exits');
+      return;
+    }
+
+    data = {
       id: book.id,
       title: book.title,
       category: book.subCategory.category.categoryName,
@@ -21,7 +28,22 @@ const Home = () => {
       unitPrice: book.price,
       quantity: book.quantity,
     };
-
+    // cart.forEach((b) => {
+    //   if (b.id !== book) {
+    //     data = {
+    //       id: book.id,
+    //       title: book.title,
+    //       category: book.subCategory.category.categoryName,
+    //       subCategory: book.subCategory.subCategoryName,
+    //       unitPrice: book.price,
+    //       quantity: book.quantity,
+    //     };
+    //   } else {
+    //     <Alert key='danger' variant='danger'>
+    //       <p>Item already exist in th ecart</p>
+    //     </Alert>;
+    //   }
+    // });
     setCart((prevArr) => {
       const cartItems = [...prevArr, data];
       localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -32,7 +54,7 @@ const Home = () => {
   useEffect(() => {
     fetchBooks();
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
-    setCart(cartItemsArr);
+    setCart(cartItemsArr ? cartItemsArr : []);
   }, []);
 
   return (
