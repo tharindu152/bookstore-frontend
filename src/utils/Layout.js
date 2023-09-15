@@ -91,6 +91,8 @@ const Layout = () => {
                   sessionStorage.removeItem('token');
                   sessionStorage.removeItem('username');
                   sessionStorage.removeItem('user_id');
+                  localStorage.removeItem('cartItems');
+                  localStorage.removeItem('finalCartStats');
                   window.location.href = '/login';
                 }}
               >

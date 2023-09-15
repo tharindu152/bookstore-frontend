@@ -45,8 +45,6 @@ const Book = () => {
     setCart(cartItemsArr ? cartItemsArr : []);
   }, []);
 
-  const handleOrder = () => {};
-
   return (
     <div>
       <h1>Books Details</h1>

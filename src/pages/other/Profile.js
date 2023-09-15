@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import {
-  getRequest,
-  postRequest,
-  postRequestFile,
-} from '../../services/ApiService';
+import { getRequest, postRequestFile } from '../../services/ApiService';
 
 const userId = sessionStorage.getItem('user_id');
 
