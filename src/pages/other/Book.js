@@ -69,14 +69,18 @@ const Book = () => {
               <p>{book.description}</p>
               <h4>Rs. {book.price}</h4>
               <h4>Qty available: {book.quantity}</h4>
-              <Button
-                variant='primary'
-                onClick={(e) => {
-                  handleShoppingCart(book);
-                }}
-              >
-                Add to Cart
-              </Button>
+              {book?.quantity > 0 ? (
+                <Button
+                  variant='primary'
+                  onClick={(e) => {
+                    handleShoppingCart(book);
+                  }}
+                >
+                  Add to Cart
+                </Button>
+              ) : (
+                <Button variant='danger'>Out of Stock</Button>
+              )}
             </div>
           </Col>
         )}
