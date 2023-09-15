@@ -56,9 +56,9 @@ const CheckOut = () => {
   };
 
   const updateBookQuantities = async () => {
-    cart.map(async (book, i) => {
+    cart?.map(async (book, i) => {
       const response = await updateBooks(book.id, {
-        quantity: book.qty,
+        quantity: book.quantity - book.qty,
       });
       console.log('update book ' + book.title + ' quantities ' + response);
     });
@@ -115,6 +115,9 @@ const CheckOut = () => {
                 sendShippingDetails();
                 sendOrderDetails();
                 updateBookQuantities();
+                localStorage.removeItem('cartItems');
+                localStorage.removeItem('finalCartStats');
+                window.location.href = '/checkout';
               }}
             >
               <Form.Group
