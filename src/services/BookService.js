@@ -12,7 +12,6 @@ export const getBooks = async () => {
 export const getBooksById = async (id) => {
   try {
     const response = await axios.get(`http://localhost:8081/books/${id}`);
-    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -31,7 +30,6 @@ export const addBook = async (data) => {
 export const updateBooks = async (id, data) => {
   try {
     const response = await axios.put(`http://localhost:8081/books/${id}`, data);
-    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -49,7 +47,6 @@ export const updateBookCoverImage = async (id, data) => {
         },
       }
     );
-    // console.log(response.data);
     return response.data;
   } catch (error) {
     console.log(error);

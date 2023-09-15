@@ -31,7 +31,7 @@ const Categories = () => {
       unitPrice: book.price,
       quantity: book.quantity,
       qty: 1,
-      subTotal: 0,
+      subTotal: book.price,
     };
 
     setCart((prevArr) => {

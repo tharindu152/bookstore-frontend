@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table, Form, Row, Col } from 'react-bootstrap';
+import { createShippingDetails } from '../../services/ShippingDetailsService';
+import { createOrder } from '../../services/OrderService';
+import { getUserById } from '../../services/UserService';
+import { updateBooks } from '../../services/BookService';
 
 const CheckOut = () => {
   const [cart, setCart] = useState(null);
@@ -11,9 +15,13 @@ const CheckOut = () => {
   const [state, setState] = useState(null);
   const [zipCode, setZipCode] = useState(null);
   const [phone, setPhone] = useState(null);
+  const [user, setUser] = useState(null);
 
-  const handleUserDetails = (event) => {
-    event.preventDefault();
+  const usrId = sessionStorage.getItem('user_id');
+
+  const sendShippingDetails = async (event) => {
+    // event.preventDefault();
+
     const data = {
       fullName: fullName,
       country: country,
@@ -21,9 +29,11 @@ const CheckOut = () => {
       city: city,
       state: state,
       zipCode: zipCode,
-      phone: phone,
+      mobileNumber: phone,
     };
-    console.log(data);
+
+    const response = await createShippingDetails(data);
+    console.log('Send shipping details ' + response.data);
   };
 
   useEffect(() => {
@@ -33,8 +43,29 @@ const CheckOut = () => {
     setCartStat(finalCartStats);
   }, []);
 
-  console.log(cart);
-  console.log(cartStat);
+  const sendOrderDetails = async () => {
+    const data = {
+      status: 'Completed',
+      user: {
+        id: usrId,
+      },
+    };
+
+    const response = await createOrder(data);
+    console.log('send order details ' + response);
+  };
+
+  const updateBookQuantities = async () => {
+    cart.map(async (book, i) => {
+      const response = await updateBooks(book.id, {
+        quantity: book.qty,
+      });
+      console.log('update book ' + book.title + ' quantities ' + response);
+    });
+  };
+
+  // console.log(cart);
+  // console.log(cartStat);
 
   return (
     <div>
@@ -78,7 +109,14 @@ const CheckOut = () => {
           </Table>
           <div className='shippingDetails'>
             <h4>Please enter your shipping Details</h4>
-            <Form onSubmit={handleUserDetails}>
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendShippingDetails();
+                sendOrderDetails();
+                updateBookQuantities();
+              }}
+            >
               <Form.Group
                 as={Row}
                 className='mb-3'
@@ -181,7 +219,7 @@ const CheckOut = () => {
                 controlId='formPlaintextEmail'
               >
                 <Form.Label column sm='2'>
-                  Phone
+                  Mobile Number
                 </Form.Label>
                 <Col sm='10'>
                   <Form.Control

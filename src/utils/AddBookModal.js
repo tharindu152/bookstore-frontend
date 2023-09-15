@@ -54,6 +54,8 @@ function AddBookModal(props) {
     const resCoverImgCreate = await updateBookCoverImage(id, coverImageData);
   };
 
+  useEffect(() => {});
+
   return (
     <Modal
       {...props}

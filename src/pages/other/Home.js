@@ -71,14 +71,18 @@ const Home = () => {
                     </Card.Text>
                     <Card.Text>ISBN: {book.isbn10}</Card.Text>
                     <Card.Text>Rs. {book.price}</Card.Text>
-                    <Button
-                      variant='primary'
-                      onClick={(e) => {
-                        handleShoppingCart(book);
-                      }}
-                    >
-                      Add to Cart
-                    </Button>
+                    {book?.quantity > 0 ? (
+                      <Button
+                        variant='primary'
+                        onClick={(e) => {
+                          handleShoppingCart(book);
+                        }}
+                      >
+                        Add to Cart
+                      </Button>
+                    ) : (
+                      <Button variant='danger'>Out of Stock</Button>
+                    )}
                   </Card.Body>
                 </Card>
               </Col>
