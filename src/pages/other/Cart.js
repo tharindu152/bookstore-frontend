@@ -19,7 +19,7 @@ const Cart = () => {
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
     setCart(
       cartItemsArr.map((book) => {
-        return { ...book, qty: 1, subTotal: 0 };
+        return { ...book };
       })
     );
   }, []);

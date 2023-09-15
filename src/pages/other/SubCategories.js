@@ -15,14 +15,23 @@ const Categories = () => {
     setBooks(response);
   };
 
+  let data = {};
+
   const handleShoppingCart = (book) => {
-    const data = {
+    if (cart.findIndex((b) => b.id === book.id) !== -1) {
+      alert('Book is already added to the cart');
+      return;
+    }
+
+    data = {
       id: book.id,
       title: book.title,
       category: book.subCategory.category.categoryName,
       subCategory: book.subCategory.subCategoryName,
       unitPrice: book.price,
       quantity: book.quantity,
+      qty: 1,
+      subTotal: 0,
     };
 
     setCart((prevArr) => {
@@ -35,10 +44,8 @@ const Categories = () => {
   useEffect(() => {
     fetchBooks();
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
-    setCart(cartItemsArr);
+    setCart(cartItemsArr ? cartItemsArr : []);
   }, []);
-
-  const handleOrder = () => {};
 
   return (
     <div>

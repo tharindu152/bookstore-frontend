@@ -15,7 +15,7 @@ const Home = () => {
   let data = {};
 
   const handleShoppingCart = (book) => {
-    if (cart.findIndex((b) => b.id == book.id) != -1) {
+    if (cart.findIndex((b) => b.id === book.id) !== -1) {
       alert('Book is already added to the cart');
       return;
     }
@@ -27,6 +27,8 @@ const Home = () => {
       subCategory: book.subCategory.subCategoryName,
       unitPrice: book.price,
       quantity: book.quantity,
+      qty: 1,
+      subTotal: 0,
     };
 
     setCart((prevArr) => {
