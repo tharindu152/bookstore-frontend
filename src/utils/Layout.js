@@ -1,7 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Container, Nav, Navbar, NavDropdown, Button } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import ReButton from 'react-bootstrap/Button';
+import { useEffect, useState, useRef } from 'react';
 import { getCategories } from '../services/CategoryService';
 import { getSubCategories } from '../services/SubCategoryService';
 import AddBookModal from './AddBookModal';
@@ -10,11 +11,23 @@ import navIcon2 from '../resources/img/nav-icon2.svg';
 import navIcon3 from '../resources/img/nav-icon3.svg';
 import shoppingCart from '../resources/img/Shopping_Cart-removebg-preview.png';
 import logo from '../resources/img/Logo-removebg-preview.png';
+import { useDisclosure } from '@chakra-ui/react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button,
+} from '@chakra-ui/react';
 
 const Layout = () => {
   const [categories, setCategories] = useState(null);
   const [subCategories, setSubCategories] = useState(null);
-  const [modalShow, setModalShow] = React.useState(false);
+  const [modalShow, setModalShow] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   const fetchCategories = async () => {
     const response = await getCategories();
@@ -76,28 +89,60 @@ const Layout = () => {
               </Nav.Link>
               <Nav.Link href='/checkout'>CheckOut</Nav.Link>
 
-              <Button
+              <ReButton
                 className='navBarBtns'
                 variant='outline-success'
                 onClick={() => setModalShow(true)}
               >
                 Add a Book
-              </Button>
+              </ReButton>
 
-              <Button
+              <ReButton
                 className='navBarBtns'
                 variant='outline-danger'
-                onClick={() => {
-                  sessionStorage.removeItem('token');
-                  sessionStorage.removeItem('username');
-                  sessionStorage.removeItem('user_id');
-                  localStorage.removeItem('cartItems');
-                  localStorage.removeItem('finalCartStats');
-                  window.location.href = '/login';
-                }}
+                onClick={onOpen}
               >
                 Log Out
-              </Button>
+              </ReButton>
+
+              <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+              >
+                <AlertDialogOverlay>
+                  <AlertDialogContent>
+                    <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                      Log Out
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                      Are you sure that you want to log out?{' '}
+                    </AlertDialogBody>
+
+                    <AlertDialogFooter>
+                      <Button ref={cancelRef} onClick={onClose}>
+                        Cancel
+                      </Button>
+                      <Button
+                        colorScheme='red'
+                        onClick={(e) => {
+                          onClose();
+                          sessionStorage.removeItem('token');
+                          sessionStorage.removeItem('username');
+                          sessionStorage.removeItem('user_id');
+                          localStorage.removeItem('cartItems');
+                          localStorage.removeItem('finalCartStats');
+                          window.location.href = '/login';
+                        }}
+                        ml={3}
+                      >
+                        Log Out
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialogOverlay>
+              </AlertDialog>
 
               <AddBookModal
                 show={modalShow}

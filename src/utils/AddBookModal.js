@@ -1,7 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Modal, Form, Row, Col, Alert } from 'react-bootstrap';
+import React, { useState, useRef } from 'react';
+import { Modal, Form, Row, Col } from 'react-bootstrap';
+import ReButton from 'react-bootstrap/Button';
 import DropDown from './DropDown';
 import { addBook, updateBookCoverImage } from '../services/BookService';
+import { useDisclosure } from '@chakra-ui/react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button,
+} from '@chakra-ui/react';
 
 function AddBookModal(props) {
   const [title, setTitle] = useState(null);
@@ -10,12 +21,14 @@ function AddBookModal(props) {
   const [description, setDescription] = useState(null);
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
-  const [featured, setFeatured] = useState(null);
+  const [error, setError] = useState(null);
   const [subCategoryId, setSubCategoryId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
   const [subCategoryName, setSubCategoryName] = useState(null);
   const [categoryName, setCategoryName] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   let id = 0;
 
@@ -53,7 +66,7 @@ function AddBookModal(props) {
     const resBookCreate = await addBook(data);
 
     if (resBookCreate.message != null) {
-      alert(resBookCreate.message);
+      setError(resBookCreate.message);
     } else {
       id = resBookCreate?.id;
       const resCoverImgCreate = await updateBookCoverImage(id, coverImageData);
@@ -233,13 +246,54 @@ function AddBookModal(props) {
               </Col>
             </Form.Group>
             <Modal.Footer>
-              <Button
-                onClick={props.onHide}
+              <ReButton
+                onClick={(e) => {
+                  onOpen();
+                }}
                 className='btnCheckout'
                 type='submit'
               >
-                Submit Order
-              </Button>
+                Add for Sale
+              </ReButton>
+
+              {error && (
+                <AlertDialog
+                  isOpen={isOpen}
+                  leastDestructiveRef={cancelRef}
+                  onClose={onClose}
+                >
+                  <AlertDialogOverlay>
+                    <AlertDialogContent>
+                      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                        Error
+                      </AlertDialogHeader>
+
+                      <AlertDialogBody>{error}</AlertDialogBody>
+
+                      <AlertDialogFooter>
+                        <Button
+                          ref={cancelRef}
+                          onClick={(e) => {
+                            onClose();
+                          }}
+                        >
+                          Try Again
+                        </Button>
+                        <Button
+                          colorScheme='red'
+                          onClick={(e) => {
+                            onClose();
+                            props.onHide();
+                          }}
+                          ml={3}
+                        >
+                          Try Later
+                        </Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialogOverlay>
+                </AlertDialog>
+              )}
             </Modal.Footer>
           </Form>
         </div>

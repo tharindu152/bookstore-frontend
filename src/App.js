@@ -1,5 +1,7 @@
 import './App.scss';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import * as React from 'react';
+import { ChakraProvider } from '@chakra-ui/react';
 import ProtectedRoute from './utils/ProtectedRoute';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
@@ -16,27 +18,29 @@ import './App.css';
 function App() {
   return (
     <div className='App'>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<ProtectedRoute />}>
-            <Route element={<Layout />}>
-              <Route path='/' element={<Home />} />
-              <Route path='/categories/:id/books' element={<Categories />} />
-              <Route
-                path='/subcategories/:id/books'
-                element={<SubCategories />}
-              />
-              <Route path='/books/:id' element={<Book />} />
-              <Route path='/cart' element={<Cart />} />
-              <Route path='/checkout' element={<CheckOut />} />
-              <Route path='/profile' element={<Profile />} />
+      <ChakraProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<ProtectedRoute />}>
+              <Route element={<Layout />}>
+                <Route path='/' element={<Home />} />
+                <Route path='/categories/:id/books' element={<Categories />} />
+                <Route
+                  path='/subcategories/:id/books'
+                  element={<SubCategories />}
+                />
+                <Route path='/books/:id' element={<Book />} />
+                <Route path='/cart' element={<Cart />} />
+                <Route path='/checkout' element={<CheckOut />} />
+                <Route path='/profile' element={<Profile />} />
+              </Route>
             </Route>
-          </Route>
 
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-        </Routes>
-      </BrowserRouter>
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+          </Routes>
+        </BrowserRouter>
+      </ChakraProvider>
     </div>
   );
 }

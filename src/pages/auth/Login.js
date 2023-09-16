@@ -1,7 +1,18 @@
 import axios from 'axios';
-import { useState } from 'react';
-import { Button, Container, FloatingLabel, Form, Alert } from 'react-bootstrap';
+import { useState, useRef } from 'react';
+import { Container, FloatingLabel, Form } from 'react-bootstrap';
+import ReButton from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import { useDisclosure } from '@chakra-ui/react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button,
+} from '@chakra-ui/react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -9,13 +20,26 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loginEnabled, setLoginEnabled] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   const handleUsername = (event) => {
     setUsername(event.target.value);
+    if (username.length <= 5) {
+      setLoginEnabled(false);
+    } else {
+      setLoginEnabled(true);
+    }
   };
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
+    if (password.length < 6) {
+      setLoginEnabled(false);
+    } else {
+      setLoginEnabled(true);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -31,7 +55,6 @@ const Login = () => {
         'http://localhost:8081/auth/login',
         data
       );
-      setError('');
       setUsername('');
       setPassword('');
 
@@ -47,9 +70,9 @@ const Login = () => {
 
       navigate('/');
     } catch (error) {
-      setError('Username or Password is wrong');
       setUsername('');
       setPassword('');
+      setError(error);
     }
   };
 
@@ -87,23 +110,54 @@ const Login = () => {
               />
             </FloatingLabel>
 
-            <Button variant='primary' type='submit'>
+            <ReButton
+              variant='primary'
+              type='submit'
+              disabled={!loginEnabled}
+              onClick={onOpen}
+            >
               Login
-            </Button>
+            </ReButton>
+
+            {error && (
+              <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+              >
+                <AlertDialogOverlay>
+                  <AlertDialogContent>
+                    <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                      Login Error
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                      Username or Password is wrong! <br /> If you do not have
+                      an account please register first.{' '}
+                    </AlertDialogBody>
+
+                    <AlertDialogFooter>
+                      <Button ref={cancelRef} onClick={onClose}>
+                        Try Again
+                      </Button>
+                      <Button
+                        colorScheme='red'
+                        onClick={(e) => {
+                          onClose();
+                          window.location.href = '/register';
+                        }}
+                        ml={3}
+                      >
+                        Register
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialogOverlay>
+              </AlertDialog>
+            )}
           </Form>
         </div>
       </Container>
-      {error && (
-        <Alert key='danger' variant='danger'>
-          {error}
-          <p>
-            If you do not have a user accout please register before loging in
-          </p>
-          <Button variant='primary' href='/register'>
-            Register
-          </Button>
-        </Alert>
-      )}
     </>
   );
 };
