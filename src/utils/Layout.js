@@ -127,7 +127,7 @@ const Layout = () => {
             <img src={navIcon3} alt='Icon' />
           </a>
         </div>
-        <p>Copyright ©️ 2023 Tharindu Thennakoon. All Rights Reserved</p>
+        <p>Copyright ©️ 2023 Readers' Nest. All Rights Reserved</p>
       </footer>
     </div>
   );

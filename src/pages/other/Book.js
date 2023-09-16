@@ -59,8 +59,8 @@ const Book = () => {
           )}
         </Col>
         {book && (
-          <Col key={book.id}>
-            <div className='item'>
+          <Col key={book.id} className='details'>
+            <div>
               <h3>{book.title}</h3>
               <h4>Written By: {book.author}</h4>
               <h4>Category: {book.subCategory.category.categoryName}</h4>

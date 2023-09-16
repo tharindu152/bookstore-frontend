@@ -19,7 +19,7 @@ const CheckOut = () => {
 
   const usrId = sessionStorage.getItem('user_id');
 
-  const sendShippingDetails = async (event) => {
+  const sendShippingDetails = async () => {
     // event.preventDefault();
 
     const data = {
@@ -34,14 +34,8 @@ const CheckOut = () => {
 
     const response = await createShippingDetails(data);
     console.log('Send shipping details ' + response.data);
+    return response;
   };
-
-  useEffect(() => {
-    const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
-    const finalCartStats = JSON.parse(localStorage.getItem('finalCartStats'));
-    setCart(cartItemsArr);
-    setCartStat(finalCartStats);
-  }, []);
 
   const sendOrderDetails = async () => {
     const data = {
@@ -63,6 +57,25 @@ const CheckOut = () => {
       console.log('update book ' + book.title + ' quantities ' + response);
     });
   };
+
+  const completeOrderTransactions = async () => {
+    let response2 = null;
+    const response1 = await updateBookQuantities();
+    if (response1 != null) {
+      response2 = await sendShippingDetails();
+    } else if (response2 != null) {
+      await sendOrderDetails();
+    } else {
+      alert('Order not procced plaese try again');
+    }
+  };
+
+  useEffect(() => {
+    const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
+    const finalCartStats = JSON.parse(localStorage.getItem('finalCartStats'));
+    setCart(cartItemsArr);
+    setCartStat(finalCartStats);
+  }, []);
 
   // console.log(cart);
   // console.log(cartStat);
@@ -112,9 +125,8 @@ const CheckOut = () => {
             <Form
               onSubmit={(e) => {
                 e.preventDefault();
-                sendShippingDetails();
-                sendOrderDetails();
-                updateBookQuantities();
+                const res = completeOrderTransactions();
+                if (res != null) return;
                 localStorage.removeItem('cartItems');
                 localStorage.removeItem('finalCartStats');
                 window.location.href = '/checkout';

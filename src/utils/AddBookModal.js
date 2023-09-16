@@ -197,8 +197,8 @@ function AddBookModal(props) {
                 ></DropDown>
               </Col>
               <Col sm='3'>
-                <Form.Label column sm='5'>
-                  Selected :
+                <Form.Label column sm='7'>
+                  You Selected :
                 </Form.Label>
               </Col>
               <Col sm='3'>
@@ -222,8 +222,8 @@ function AddBookModal(props) {
                 ></DropDown>
               </Col>
               <Col sm='3'>
-                <Form.Label column sm='5'>
-                  Selected :
+                <Form.Label column sm='7'>
+                  You Selected :
                 </Form.Label>
               </Col>
               <Col sm='3'>

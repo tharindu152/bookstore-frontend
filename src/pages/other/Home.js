@@ -54,7 +54,7 @@ const Home = () => {
         {books &&
           books.map((book) => {
             return (
-              <Col key={book.id} xs={6} md={4}>
+              <Col key={book.id} xs={6} md={3}>
                 <Card className='item'>
                   <Card.Img
                     className='itemImage'
