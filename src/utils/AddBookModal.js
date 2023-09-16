@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
+import { Button, Modal, Form, Row, Col, Alert } from 'react-bootstrap';
 import DropDown from './DropDown';
 import { addBook, updateBookCoverImage } from '../services/BookService';
 
@@ -11,8 +11,10 @@ function AddBookModal(props) {
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
   const [featured, setFeatured] = useState(null);
-  const [subCategory, setSubCategory] = useState(null);
-  const [category, setCategory] = useState(null);
+  const [subCategoryId, setSubCategoryId] = useState(null);
+  const [categoryId, setCategoryId] = useState(null);
+  const [subCategoryName, setSubCategoryName] = useState(null);
+  const [categoryName, setCategoryName] = useState(null);
   const [coverImage, setCoverImage] = useState(null);
 
   let id = 0;
@@ -32,9 +34,9 @@ function AddBookModal(props) {
       quantity: quantity,
       featured: false,
       subCategory: {
-        id: 1,
+        id: subCategoryId,
         category: {
-          id: 1,
+          id: categoryId,
         },
       },
       isbn10: isbn10,
@@ -49,12 +51,17 @@ function AddBookModal(props) {
     console.log(data);
 
     const resBookCreate = await addBook(data);
-    id = resBookCreate.id;
 
-    const resCoverImgCreate = await updateBookCoverImage(id, coverImageData);
+    if (resBookCreate.message != null) {
+      alert(resBookCreate.message);
+    } else {
+      id = resBookCreate?.id;
+      const resCoverImgCreate = await updateBookCoverImage(id, coverImageData);
+    }
+    console.log(categoryName);
+    console.log(subCategoryName);
+    console.log(resBookCreate);
   };
-
-  useEffect(() => {});
 
   return (
     <Modal
@@ -179,22 +186,50 @@ function AddBookModal(props) {
               <Form.Label column sm='2'>
                 Category
               </Form.Label>
-              <Col sm='10'>
+              <Col sm='3'>
                 <DropDown
                   items={props.categories}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) => {
+                    setCategoryId(e.attributes[0].value);
+                    setCategoryName(e.innerHTML);
+                    // console.log(e.innerHTML);
+                  }}
                 ></DropDown>
+              </Col>
+              <Col sm='3'>
+                <Form.Label column sm='5'>
+                  Selected :
+                </Form.Label>
+              </Col>
+              <Col sm='3'>
+                <Form.Label column sm='12'>
+                  {categoryName}
+                </Form.Label>
               </Col>
             </Form.Group>
             <Form.Group as={Row} className='mb-3' controlId='dropDownSelection'>
               <Form.Label column sm='2'>
                 Sub Category
               </Form.Label>
-              <Col sm='10'>
+              <Col sm='3'>
                 <DropDown
                   items={props.subcategories}
-                  onChange={(e) => setSubCategory(e.target.value)}
+                  onChange={(e) => {
+                    setSubCategoryId(e.attributes[0].value);
+                    setSubCategoryName(e.innerHTML);
+                    // console.log(e.innerHTML);
+                  }}
                 ></DropDown>
+              </Col>
+              <Col sm='3'>
+                <Form.Label column sm='5'>
+                  Selected :
+                </Form.Label>
+              </Col>
+              <Col sm='3'>
+                <Form.Label column sm='12'>
+                  {subCategoryName}
+                </Form.Label>
               </Col>
             </Form.Group>
             <Modal.Footer>

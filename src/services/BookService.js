@@ -23,7 +23,7 @@ export const addBook = async (data) => {
     const response = await axios.post('http://localhost:8081/books', data);
     return response.data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 

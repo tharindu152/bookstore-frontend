@@ -39,10 +39,13 @@ const Home = () => {
   };
 
   useEffect(() => {
-    fetchBooks();
     const cartItemsArr = JSON.parse(localStorage.getItem('cartItems'));
     setCart(cartItemsArr ? cartItemsArr : []);
   }, []);
+
+  useEffect(() => {
+    fetchBooks();
+  });
 
   return (
     <div>

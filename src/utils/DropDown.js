@@ -18,7 +18,13 @@ const DropDown = (props) => {
         {props.items &&
           props.items.map((item) => {
             return (
-              <Dropdown.Item key={item.id} onChange={props.onChange}>
+              <Dropdown.Item
+                key={item.id}
+                tabIndex={item.id}
+                onClick={(e) => {
+                  props.onChange(e.target);
+                }}
+              >
                 {item.categoryName != null
                   ? item.categoryName
                   : item.subCategoryName}
