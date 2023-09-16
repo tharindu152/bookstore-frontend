@@ -15,14 +15,22 @@ body {
   background-color: #fff;
 }
 
-.footer {
-  bottom: 0;
+#footer {
+  background-color: #fff;
   width: 100%;
+  align-items: center;
+  i {
+    width: 2%;
+    margin: 5px;
+  }
 }
 
-.social-icon img {
-  width: 2%;
-  margin: 5px;
+.social-icon {
+  align-content: center;
+  i {
+    width: 2%;
+    margin: 5px;
+  }
 }
 
 .item {
@@ -33,12 +41,6 @@ body {
 .itemImage {
   max-width: 50%;
   margin: 10px auto;
-}
-
-.bookDetails {
-  img {
-    margin: 10px;
-  }
 }
 
 .btnToolBarIncDec {

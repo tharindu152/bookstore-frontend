@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -20,30 +21,32 @@ const AlertModal = (props) => {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              {props.alertHeading}
+              Book already added
             </AlertDialogHeader>
 
-            <AlertDialogBody>{props.alertMsg}</AlertDialogBody>
+            <AlertDialogBody>
+              Selected Book is alreday available in the cart!
+            </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={props.cancelRef} onClick={props.onClose}>
-                {props.btnNo}
-              </Button>
               <Button
+                ref={props.cancelRef}
+                // onClick={(e) => {
+                //   props.onClose();
+                // }}
+              >
+                Close
+              </Button>
+              {/* <Button
                 colorScheme='red'
                 onClick={(e) => {
                   props.onClose();
-                  sessionStorage.removeItem('token');
-                  sessionStorage.removeItem('username');
-                  sessionStorage.removeItem('user_id');
-                  localStorage.removeItem('cartItems');
-                  localStorage.removeItem('finalCartStats');
-                  window.location.href = '/login';
+                  window.location.href = '/cart';
                 }}
                 ml={3}
               >
-                {props.btnYes}
-              </Button>
+                View Cart
+              </Button> */}
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialogOverlay>

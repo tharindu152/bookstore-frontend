@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react';
-import { Row, Col, Button, Card } from 'react-bootstrap';
+import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Row, Col, Card } from 'react-bootstrap';
+import ReButton from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import { getBooksBySubCategoryId } from '../../services/SubCategoryService';
+import { useDisclosure } from '@chakra-ui/react';
+import AlertModal from '../../utils/AlertModal';
 
 const Categories = () => {
+  const navigate = useNavigate();
   const [books, setBooks] = useState(null);
   const [cart, setCart] = useState([]);
+  const [error, setError] = useState();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   const pathname = window.location.pathname;
   const id = pathname.substring(15, 16);
@@ -19,7 +27,7 @@ const Categories = () => {
 
   const handleShoppingCart = (book) => {
     if (cart.findIndex((b) => b.id === book.id) !== -1) {
-      alert('Book is already added to the cart');
+      setError(true);
       return;
     }
 
@@ -47,6 +55,12 @@ const Categories = () => {
     setCart(cartItemsArr ? cartItemsArr : []);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setError(false);
+    }, 3000);
+  });
+
   return (
     <div>
       <h1>
@@ -66,10 +80,12 @@ const Categories = () => {
                     value={book.id}
                     src={`http://localhost:8081/uploads/${book.coverImage}`}
                     href={`/books/${book.id}`}
+                    onClick={(e) => {
+                      navigate(`/books/${book.id}`);
+                    }}
                   />
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
-                    <Link to={`/books/${book.id}`}>More Details</Link>
                     <Card.Text>By: {book.author}</Card.Text>
                     <Card.Text>
                       Category: {book.subCategory.category.categoryName}
@@ -80,22 +96,30 @@ const Categories = () => {
                     {/* <Card.Text>{book.description}</Card.Text> */}
                     <Card.Text>Rs. {book.price}</Card.Text>
                     {book?.quantity > 0 ? (
-                      <Button
+                      <ReButton
                         variant='primary'
                         onClick={(e) => {
                           handleShoppingCart(book);
+                          onOpen();
                         }}
                       >
                         Add to Cart
-                      </Button>
+                      </ReButton>
                     ) : (
-                      <Button variant='danger'>Out of Stock</Button>
+                      <ReButton variant='danger'>Out of Stock</ReButton>
                     )}
                   </Card.Body>
                 </Card>
               </Col>
             );
           })}
+        {error && (
+          <AlertModal
+            isOpen={isOpen}
+            onClose={onClose}
+            cancelRef={cancelRef}
+          ></AlertModal>
+        )}
       </Row>
     </div>
   );

@@ -1,9 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Table, Form, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState, useRef } from 'react';
+import { Table, Form, Row, Col } from 'react-bootstrap';
+import ReButton from 'react-bootstrap/Button';
 import { createShippingDetails } from '../../services/ShippingDetailsService';
 import { createOrder } from '../../services/OrderService';
 import { getUserById } from '../../services/UserService';
 import { updateBooks } from '../../services/BookService';
+import { useDisclosure } from '@chakra-ui/react';
+import {
+  AlertDialog,
+  AlertDialogBody,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialogOverlay,
+  Button,
+} from '@chakra-ui/react';
 
 const CheckOut = () => {
   const [cart, setCart] = useState(null);
@@ -16,6 +27,9 @@ const CheckOut = () => {
   const [zipCode, setZipCode] = useState(null);
   const [phone, setPhone] = useState(null);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState('');
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   const usrId = sessionStorage.getItem('user_id');
 
@@ -66,7 +80,7 @@ const CheckOut = () => {
     } else if (response2 != null) {
       await sendOrderDetails();
     } else {
-      alert('Order not procced plaese try again');
+      setError('error');
     }
   };
 
@@ -244,9 +258,48 @@ const CheckOut = () => {
                   />
                 </Col>
               </Form.Group>
-              <Button className='btnCheckout' type='submit'>
-                🛒 COMPLETE ORDER & CHECKOUT
-              </Button>
+              <ReButton className='btnCheckout' type='submit' onClick={onOpen}>
+                COMPLETE ORDER & CHECKOUT
+              </ReButton>
+
+              {error && (
+                <AlertDialog
+                  isOpen={isOpen}
+                  leastDestructiveRef={cancelRef}
+                  onClose={onClose}
+                >
+                  <AlertDialogOverlay>
+                    <AlertDialogContent>
+                      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                        Complete Order and CheckOut
+                      </AlertDialogHeader>
+
+                      <AlertDialogBody>
+                        Are you sure that you want to complete the order and
+                        checkout?{' '}
+                      </AlertDialogBody>
+
+                      <AlertDialogFooter>
+                        <Button ref={cancelRef} onClick={onClose}>
+                          Review Order
+                        </Button>
+                        <Button
+                          colorScheme='red'
+                          onClick={(e) => {
+                            onClose();
+                            localStorage.removeItem('cartItems');
+                            localStorage.removeItem('finalCartStats');
+                            window.location.href = '/';
+                          }}
+                          ml={3}
+                        >
+                          Complete and Checkout
+                        </Button>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialogOverlay>
+                </AlertDialog>
+              )}
             </Form>
           </div>
         </div>

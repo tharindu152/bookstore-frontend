@@ -1,14 +1,11 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import ReButton from 'react-bootstrap/Button';
 import { useEffect, useState, useRef } from 'react';
 import { getCategories } from '../services/CategoryService';
 import { getSubCategories } from '../services/SubCategoryService';
 import AddBookModal from './AddBookModal';
-import navIcon1 from '../resources/img/nav-icon1.svg';
-import navIcon2 from '../resources/img/nav-icon2.svg';
-import navIcon3 from '../resources/img/nav-icon3.svg';
 import shoppingCart from '../resources/img/Shopping_Cart-removebg-preview.png';
 import logo from '../resources/img/Logo-removebg-preview.png';
 import { useDisclosure } from '@chakra-ui/react';
@@ -160,19 +157,26 @@ const Layout = () => {
         {}
       </Container>
 
-      <footer className='bg-body-tertiary footer'>
-        <div className='social-icon'>
-          <a href='https://www.linkedin.com/in/tharindu-thennakoon-b1a40b94'>
-            <img src={navIcon1} alt='Icon' />
-          </a>
-          <a href='https://www.facebook.com/tharindu.thennakoon.397'>
-            <img src={navIcon2} alt='Icon' />
-          </a>
-          <a href='https://www.instagram.com/tharinduthenne/'>
-            <img src={navIcon3} alt='Icon' />
-          </a>
+      <footer className='white-section' id='footer'>
+        <div className='container-fluid'>
+          <Link href='https://www.linkedin.com/in/tharindu-thennakoon-b1a40b94/'>
+            <i className='social-icon fa-brands fa-twitter fa-2x'></i>
+          </Link>
+
+          <Link href='https://www.linkedin.com/in/tharindu-thennakoon-b1a40b94/'>
+            <i className='social-icon fa-brands fa-facebook-f fa-2x'></i>
+          </Link>
+
+          <Link href='https://www.linkedin.com/in/tharindu-thennakoon-b1a40b94/'>
+            <i className='social-icon fa-brands fa-instagram fa-2x'></i>
+          </Link>
+
+          <Link href='https://www.linkedin.com/in/tharindu-thennakoon-b1a40b94/'>
+            <i className='social-icon fa-solid fa-envelope fa-2x'></i>
+          </Link>
+
+          <p className='copyright'>Copyright ©️ 2023 Readers' Nest</p>
         </div>
-        <p>Copyright ©️ 2023 Readers' Nest. All Rights Reserved</p>
       </footer>
     </div>
   );

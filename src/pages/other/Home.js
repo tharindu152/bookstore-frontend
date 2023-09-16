@@ -1,11 +1,18 @@
-import { useEffect, useState } from 'react';
-import { Row, Col, Button, Card, Alert } from 'react-bootstrap';
+import { useEffect, useState, useRef } from 'react';
+import { Row, Col, Card } from 'react-bootstrap';
+import ReButton from 'react-bootstrap/Button';
+import { useNavigate } from 'react-router-dom';
 import { getBooks } from '../../services/BookService';
-import { Link } from 'react-router-dom';
+import AlertModal from '../../utils/AlertModal';
+import { useDisclosure } from '@chakra-ui/react';
 
 const Home = () => {
+  const navigate = useNavigate();
   const [books, setBooks] = useState(null);
   const [cart, setCart] = useState([]);
+  const [error, setError] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   const fetchBooks = async () => {
     const response = await getBooks();
@@ -16,7 +23,10 @@ const Home = () => {
 
   const handleShoppingCart = (book) => {
     if (cart.findIndex((b) => b.id === book.id) !== -1) {
-      alert('Book is already added to the cart');
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 3000);
       return;
     }
 
@@ -61,10 +71,12 @@ const Home = () => {
                     variant='top'
                     value={book.id}
                     src={`http://localhost:8081/uploads/${book.coverImage}`}
+                    onClick={(e) => {
+                      navigate(`/books/${book.id}`);
+                    }}
                   />
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
-                    <Link to={`/books/${book.id}`}>More Details</Link>
                     <Card.Text>By: {book.author}</Card.Text>
                     <Card.Text>
                       Category: {book.subCategory.category.categoryName}
@@ -75,22 +87,30 @@ const Home = () => {
                     <Card.Text>ISBN: {book.isbn10}</Card.Text>
                     <Card.Text>Rs. {book.price}</Card.Text>
                     {book?.quantity > 0 ? (
-                      <Button
+                      <ReButton
                         variant='primary'
                         onClick={(e) => {
                           handleShoppingCart(book);
+                          onOpen();
                         }}
                       >
                         Add to Cart
-                      </Button>
+                      </ReButton>
                     ) : (
-                      <Button variant='danger'>Out of Stock</Button>
+                      <ReButton variant='danger'>Out of Stock</ReButton>
                     )}
                   </Card.Body>
                 </Card>
               </Col>
             );
           })}
+        {error && (
+          <AlertModal
+            isOpen={isOpen}
+            onClose={onClose}
+            cancelRef={cancelRef}
+          ></AlertModal>
+        )}
       </Row>
     </div>
   );

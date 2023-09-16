@@ -1,10 +1,16 @@
-import { useEffect, useState } from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { useEffect, useState, useRef } from 'react';
+import { Row, Col } from 'react-bootstrap';
+import ReButton from 'react-bootstrap/Button';
 import { getBooksById } from '../../services/BookService';
+import { useDisclosure } from '@chakra-ui/react';
+import AlertModal from '../../utils/AlertModal';
 
 const Book = () => {
   const [book, setBooks] = useState(null);
   const [cart, setCart] = useState([]);
+  const [error, setError] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const cancelRef = useRef();
 
   const fetchBooks = async () => {
     const pathname = window.location.pathname;
@@ -17,7 +23,7 @@ const Book = () => {
 
   const handleShoppingCart = (book) => {
     if (cart.findIndex((b) => b.id === book.id) !== -1) {
-      alert('Book is already added to the cart');
+      setError(true);
       return;
     }
 
@@ -45,6 +51,12 @@ const Book = () => {
     setCart(cartItemsArr ? cartItemsArr : []);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setError(false);
+    }, 3000);
+  });
+
   return (
     <div>
       <h1>Books Details</h1>
@@ -70,24 +82,32 @@ const Book = () => {
               <h4>Rs. {book.price}</h4>
               <h4>Qty available: {book.quantity}</h4>
               {book?.quantity > 0 ? (
-                <Button
+                <ReButton
                   variant='primary'
                   onClick={(e) => {
                     handleShoppingCart(book);
+                    onOpen();
                   }}
                 >
                   Add to Cart
-                </Button>
+                </ReButton>
               ) : (
-                <Button variant='danger'>Out of Stock</Button>
+                <ReButton variant='danger'>Out of Stock</ReButton>
+              )}
+              {error && (
+                <AlertModal
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  cancelRef={cancelRef}
+                ></AlertModal>
               )}
             </div>
           </Col>
         )}
       </Row>
-      <Button variant='primary' size='sm' href='/cart'>
+      <ReButton variant='primary' size='sm' href='/cart'>
         View Cart
-      </Button>
+      </ReButton>
     </div>
   );
 };
