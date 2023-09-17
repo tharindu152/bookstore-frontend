@@ -36,11 +36,9 @@ Pages include to the project are
 - Pages for login and register<br>
   <img width="500" src="https://github.com/tharindu152/bookstore-frontend/blob/master/src/resources/img/login%20error.png">
   <br>
-
-Responsiveness of the pages was also maintained<br>
-
-<img width="500" src="https://github.com/tharindu152/bookstore-frontend/blob/master/src/resources/img/Responsive%20UI.png"><br>
-<img width="500" src="https://github.com/tharindu152/bookstore-frontend/blob/master/src/resources/img/Responsive%20UI%20cart.png">
+- Responsiveness of the pages was also maintained<br>
+  <img width="500" src="https://github.com/tharindu152/bookstore-frontend/blob/master/src/resources/img/Responsive%20UI.png"><br>
+  <img width="500" src="https://github.com/tharindu152/bookstore-frontend/blob/master/src/resources/img/Responsive%20UI%20cart.png">
 
 ### License
 
