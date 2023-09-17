@@ -23,19 +23,19 @@ Pages include to the project are
 
 - Home page
 
-- Book Categories Page
+- Book Categories Page<br>
   <img width="500" src="https://github.com/tharindu152/bookstore-backend/blob/master/src/main/resources/img/ER_Digram.png">
-- Book Details Page
+- Book Details Page<br>
   <img width="500" src="https://github.com/tharindu152/bookstore-backend/blob/master/src/main/resources/img/ER_Digram.png">
-- Cart Page
+- Cart Page<br>
   <img width="500" src="https://github.com/tharindu152/bookstore-backend/blob/master/src/main/resources/img/ER_Digram.png">
-- Checkout Page
+- Checkout Page<br>
   <img width="500" src="https://github.com/tharindu152/bookstore-backend/blob/master/src/main/resources/img/ER_Digram.png">
-- Pages for login and register
+- Pages for login and register<br>
   <img width="500" src="https://github.com/tharindu152/bookstore-backend/blob/master/src/main/resources/img/ER_Digram.png">
   <br>
 
-Responsiveness of the pages was also maintained
+Responsiveness of the pages was also maintained<br>
 
 <img width="500" src="https://github.com/tharindu152/bookstore-backend/blob/master/src/main/resources/img/ER_Digram.png">
 <img width="500" src="https://github.com/tharindu152/bookstore-backend/blob/master/src/main/resources/img/ER_Digram.png">
