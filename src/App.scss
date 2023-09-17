@@ -31,6 +31,10 @@ body {
   }
 }
 
+#cartIcon {
+  margin: auto;
+}
+
 #cartIcon:hover {
   animation: Shake 0.5s linear infinite;
 }
@@ -172,7 +176,7 @@ body {
   background-color: #fff;
   width: 100%;
   position: fixed;
-  bottom: 0;
+  // bottom: 0;
 
   p {
     margin-bottom: 0;
