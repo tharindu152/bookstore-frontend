@@ -42,7 +42,7 @@ const Cart = () => {
   });
 
   return (
-    <div>
+    <div className='cartPage'>
       {cart != null ? (
         <div>
           <h1>Cart</h1>
@@ -140,7 +140,7 @@ const Cart = () => {
               </tr>
             </tbody>
           </Table>
-          <Button className='btnCheckout' href='/checkout'>
+          <Button className='btns' variant='outline-primary' href='/checkout'>
             PROCEED TO CHECKOUT
           </Button>
         </div>

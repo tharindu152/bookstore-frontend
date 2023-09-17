@@ -97,7 +97,8 @@ const Categories = () => {
                     <Card.Text>Rs. {book.price}</Card.Text>
                     {book?.quantity > 0 ? (
                       <ReButton
-                        variant='primary'
+                        className='btns'
+                        variant='outline-primary'
                         onClick={(e) => {
                           handleShoppingCart(book);
                           onOpen();

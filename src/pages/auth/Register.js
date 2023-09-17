@@ -117,7 +117,7 @@ const Register = () => {
             <div className='text-end'>
               <Button
                 type='submit'
-                variant='primary'
+                variant='outline-primary'
                 disabled={!registerEnabled}
               >
                 Register
@@ -130,7 +130,7 @@ const Register = () => {
         If you already have a user accout please go to login page. Otherwise
         register first.
       </p>
-      <Button variant='primary' href='/login'>
+      <Button variant='outline-primary' href='/login'>
         Login
       </Button>
     </>

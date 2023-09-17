@@ -45,18 +45,14 @@ const Layout = () => {
 
   return (
     <div>
-      <Navbar
-        expand='lg'
-        className='bg-body-tertiary navbarContainer'
-        sticky='top'
-      >
+      <Navbar expand='lg' className='bg-body-tertiary' sticky='top'>
         <Container>
           <Navbar.Brand href='/'>
             <img src={logo} alt='Icon' style={{ width: '10rem' }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
-            <Nav className='me-auto my-2 my-lg-0'>
+            <Nav className='me-auto my-2 my-lg-0 navbarContainer'>
               {categories &&
                 categories.map((category) => {
                   return (
@@ -81,26 +77,27 @@ const Layout = () => {
                     </NavDropdown>
                   );
                 })}
-              <Nav.Link href='/cart'>
+              <Nav.Link href='/cart' id='cartIcon'>
                 <img src={shoppingCart} alt='Icon' style={{ width: '2rem' }} />
               </Nav.Link>
               <Nav.Link href='/checkout'>CheckOut</Nav.Link>
+              <div className='ms-auto'>
+                <ReButton
+                  className='navBarBtns'
+                  variant='outline-warning'
+                  onClick={() => setModalShow(true)}
+                >
+                  Add a Book
+                </ReButton>
 
-              <ReButton
-                className='navBarBtns'
-                variant='outline-success'
-                onClick={() => setModalShow(true)}
-              >
-                Add a Book
-              </ReButton>
-
-              <ReButton
-                className='navBarBtns'
-                variant='outline-danger'
-                onClick={onOpen}
-              >
-                Log Out
-              </ReButton>
+                <ReButton
+                  className='navBarBtns'
+                  variant='outline-danger'
+                  onClick={onOpen}
+                >
+                  Log Out
+                </ReButton>
+              </div>
 
               <AlertDialog
                 isOpen={isOpen}
@@ -152,7 +149,7 @@ const Layout = () => {
         </Container>
       </Navbar>
 
-      <Container className='py-4'>
+      <Container className='py-4' id='body'>
         <Outlet />
         {}
       </Container>

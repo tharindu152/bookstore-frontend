@@ -111,7 +111,7 @@ const Login = () => {
             </FloatingLabel>
 
             <ReButton
-              variant='primary'
+              variant='outline-primary'
               type='submit'
               disabled={!loginEnabled}
               onClick={onOpen}

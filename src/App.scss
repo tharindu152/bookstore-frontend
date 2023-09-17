@@ -6,7 +6,12 @@
 html,
 body {
   background-color: #eee !important;
+  min-height: 100vh !important;
 }
+
+//App buttons
+
+//Log in page
 
 .login-box {
   max-width: 450px;
@@ -15,43 +20,181 @@ body {
   background-color: #fff;
 }
 
-#footer {
-  background-color: #fff;
+//Nav bar
+.navbarContainer {
   width: 100%;
-  align-items: center;
-  i {
-    width: 2%;
-    margin: 5px;
+  font-size: 1.1rem;
+  .navBarBtns {
+    font-size: 1.1rem;
+    margin-right: 10px;
+    margin-bottom: 2px;
   }
 }
 
-.social-icon {
-  align-content: center;
-  i {
-    width: 2%;
-    margin: 5px;
+#cartIcon:hover {
+  animation: Shake 0.5s linear infinite;
+}
+
+@keyframes Shake {
+  0% {
+    transform: rotate(7deg);
+  }
+
+  25% {
+    transform: rotate(-8deg);
+  }
+
+  50% {
+    transform: rotate(7deg);
+  }
+
+  75% {
+    transform: rotate(-8deg);
+  }
+
+  100% {
+    transform: rotate(7deg);
   }
 }
+
+.btn-outline-warning {
+  --bs-btn-color: #1575a8 !important;
+  --bs-btn-border-color: #1575a8 !important;
+  --bs-btn-hover-color: #ffffff !important ;
+  --bs-btn-hover-bg: #1575a8 !important;
+  --bs-btn-hover-border-color: #1575a8 !important;
+}
+
+//Book items
 
 .item {
   width: '12rem';
   margin: 10px;
+  --bs-card-border-color: #faa422 !important;
+  --bs-card-border-width: 3px !important;
+
+  .itemImage {
+    max-width: 50%;
+    margin: 10px auto;
+  }
+
+  .itemImage:hover {
+    cursor: pointer;
+  }
+
+  .btns {
+    --bs-btn-color: #1575a8 !important;
+    --bs-btn-border-color: #1575a8 !important;
+    --bs-btn-hover-color: #ffffff !important ;
+    --bs-btn-hover-bg: #1575a8 !important;
+    --bs-btn-hover-border-color: #1575a8 !important;
+  }
 }
 
-.itemImage {
-  max-width: 50%;
-  margin: 10px auto;
+.item:hover {
+  box-shadow: 0 4px 20px 0 rgba(250, 164, 34, 0.2),
+    0 6px 20px 0 rgba(250, 164, 34, 0.19);
 }
 
-.btnToolBarIncDec {
-  width: min-content;
-  margin: auto;
+//Book details page
+.bookPage {
+  h1 {
+    margin-bottom: 20px;
+  }
+  .bookImage {
+    img {
+      max-width: 75%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .bookDetails {
+    h5 {
+      text-align: left;
+      p {
+        display: inline;
+        font-size: medium;
+        color: #1575a8;
+      }
+    }
+    p {
+      text-align: left;
+      color: #1575a8;
+    }
+  }
+
+  .bookDetailBtnRow {
+    .btn {
+      margin-top: 20px;
+      margin-left: 10px;
+      // display: inline;
+      width: 10%;
+      --bs-btn-color: #1575a8 !important;
+      --bs-btn-border-color: #1575a8 !important;
+      --bs-btn-hover-color: #ffffff !important ;
+      --bs-btn-hover-bg: #1575a8 !important;
+      --bs-btn-hover-border-color: #1575a8 !important;
+    }
+  }
+}
+//Cart buttons
+.cartPage {
+  min-height: 100% !important;
+  .btnToolBarIncDec {
+    width: min-content;
+    margin: auto;
+  }
+
+  .btns {
+    --bs-btn-color: #1575a8 !important;
+    --bs-btn-border-color: #1575a8 !important;
+    --bs-btn-hover-color: #ffffff !important ;
+    --bs-btn-hover-bg: #1575a8 !important;
+    --bs-btn-hover-border-color: #1575a8 !important;
+  }
 }
 
-.navbarContainer {
-  .navBarBtns {
-    margin-right: 10px;
-    margin-bottom: 2px;
+//Checkout page
+.checkoutPage {
+  .btn-outline-warning {
+    --bs-btn-color: #1575a8 !important;
+    --bs-btn-border-color: #1575a8 !important;
+    --bs-btn-hover-color: #ffffff !important ;
+    --bs-btn-hover-bg: #1575a8 !important;
+    --bs-btn-hover-border-color: #1575a8 !important;
+  }
+}
+
+//Footer
+#footer {
+  background-color: #fff;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  i {
+    width: 2%;
+    margin: 5px;
+  }
+
+  .social-icon {
+    align-content: center;
+    color: #1575a8;
+    i {
+      width: 2%;
+      margin: 5px;
+    }
+  }
+
+  .social-icon:hover {
+    color: #000000;
+    animation: Shake 0.5s linear infinite;
   }
 }
 

@@ -258,7 +258,11 @@ const CheckOut = () => {
                   />
                 </Col>
               </Form.Group>
-              <ReButton className='btnCheckout' type='submit' onClick={onOpen}>
+              <ReButton
+                variant='outline-warning'
+                type='submit'
+                onClick={onOpen}
+              >
                 COMPLETE ORDER & CHECKOUT
               </ReButton>
 

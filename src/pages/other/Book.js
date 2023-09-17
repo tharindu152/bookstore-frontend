@@ -58,10 +58,10 @@ const Book = () => {
   });
 
   return (
-    <div>
-      <h1>Books Details</h1>
-      <Row className='bookDetails'>
-        <Col>
+    <div className='bookPage'>
+      <h1>{book?.title}</h1>
+      <Row>
+        <Col className='bookImage '>
           {book && (
             <img
               className='itemImage'
@@ -71,43 +71,62 @@ const Book = () => {
           )}
         </Col>
         {book && (
-          <Col key={book.id} className='details'>
+          <Col key={book.id} className='bookDetails'>
             <div>
-              <h3>{book.title}</h3>
-              <h4>Written By: {book.author}</h4>
-              <h4>Category: {book.subCategory.category.categoryName}</h4>
-              <h4>Subcategory: {book.subCategory.subCategoryName}</h4>
-              <h4>ISBN: {book.isbn10}</h4>
+              <h5>
+                Written By: <p>{book.author}</p>
+              </h5>
+              <h5>
+                Category: <p>{book.subCategory.category.categoryName}</p>{' '}
+              </h5>
+              <h5>
+                Subcategory: <p>{book.subCategory.subCategoryName}</p>{' '}
+              </h5>
+              <h5>
+                ISBN: <p>{book.isbn10}</p>
+              </h5>
+              <h5>Description:</h5>
               <p>{book.description}</p>
-              <h4>Rs. {book.price}</h4>
-              <h4>Qty available: {book.quantity}</h4>
-              {book?.quantity > 0 ? (
-                <ReButton
-                  variant='primary'
-                  onClick={(e) => {
-                    handleShoppingCart(book);
-                    onOpen();
-                  }}
-                >
-                  Add to Cart
-                </ReButton>
-              ) : (
-                <ReButton variant='danger'>Out of Stock</ReButton>
-              )}
-              {error && (
-                <AlertModal
-                  isOpen={isOpen}
-                  onClose={onClose}
-                  cancelRef={cancelRef}
-                ></AlertModal>
-              )}
+              <h5>
+                Rs. <p>{book.price}</p>
+              </h5>
+              <h5>
+                Qty available: <p>{book.quantity}</p>
+              </h5>
             </div>
           </Col>
         )}
       </Row>
-      <ReButton variant='primary' size='sm' href='/cart'>
-        View Cart
-      </ReButton>
+      <Row>
+        <div className='bookDetailBtnRow'>
+          {book?.quantity > 0 ? (
+            <ReButton
+              className='btns'
+              variant='outline-primary'
+              onClick={(e) => {
+                handleShoppingCart(book);
+                onOpen();
+              }}
+            >
+              Add to Cart
+            </ReButton>
+          ) : (
+            <ReButton variant='danger' className='btns'>
+              Out of Stock
+            </ReButton>
+          )}
+          {error && (
+            <AlertModal
+              isOpen={isOpen}
+              onClose={onClose}
+              cancelRef={cancelRef}
+            ></AlertModal>
+          )}
+          <ReButton className='btn' variant='outline-primary' href='/cart'>
+            View Cart
+          </ReButton>
+        </div>
+      </Row>
     </div>
   );
 };
