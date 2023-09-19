@@ -29,10 +29,18 @@ body {
     margin-right: 10px;
     margin-bottom: 2px;
   }
+
+  .btns {
+    @media (max-width: 991px) {
+      margin: auto;
+    }
+  }
 }
 
 #cartIcon {
-  margin: auto;
+  @media (max-width: 991px) {
+    margin: auto;
+  }
 }
 
 #cartIcon:hover {
@@ -175,7 +183,7 @@ body {
 #footer {
   background-color: #fff;
   width: 100%;
-  position: fixed;
+  position: relative;
   // bottom: 0;
 
   p {
@@ -188,11 +196,11 @@ body {
   }
 
   .social-icon {
-    align-content: center;
+    margin: auto;
     color: #1575a8;
-    i {
-      width: 2%;
-      margin: 5px;
+
+    @media (max-width: 992px) {
+      width: 10%;
     }
   }
 

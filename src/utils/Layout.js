@@ -81,7 +81,7 @@ const Layout = () => {
                 <img src={shoppingCart} alt='Icon' style={{ width: '2rem' }} />
               </Nav.Link>
               <Nav.Link href='/checkout'>CheckOut</Nav.Link>
-              <div className='ms-auto'>
+              <div className='ms-auto btns'>
                 <ReButton
                   className='navBarBtns'
                   variant='outline-warning'

@@ -40,6 +40,15 @@ Pages include to the project are
   <img width="500" src="https://github.com/tharindu152/bookstore-frontend/blob/master/src/resources/img/Responsive%20UI.png"><br>
   <img width="500" src="https://github.com/tharindu152/bookstore-frontend/blob/master/src/resources/img/Responsive%20UI%20cart.png">
 
+### How to run the application locally
+
+- Download the project zip folder
+- Unzip it to a preferred location in your computer
+- Open the project folder using terminal
+- type the undermentioned commands and press enter
+  - npm i
+  - npm start
+
 ### License
 
 Copyright ©️ 2023 Tharindu Thennakoon <br>
