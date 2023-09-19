@@ -145,7 +145,7 @@ const Cart = () => {
           </Button>
         </div>
       ) : (
-        <div>
+        <div className='cartEmptyDiv'>
           <h3>Cart is empty..! Go ahead and add some books to cart</h3>
         </div>
       )}

@@ -61,27 +61,18 @@ const CheckOut = () => {
 
     const response = await createOrder(data);
     console.log('send order details ' + response);
+    return response;
   };
 
   const updateBookQuantities = async () => {
+    let response = null;
     cart?.map(async (book, i) => {
-      const response = await updateBooks(book.id, {
+      response = await updateBooks(book.id, {
         quantity: book.quantity - book.qty,
       });
       console.log('update book ' + book.title + ' quantities ' + response);
     });
-  };
-
-  const completeOrderTransactions = async () => {
-    let response2 = null;
-    const response1 = await updateBookQuantities();
-    if (response1 != null) {
-      response2 = await sendShippingDetails();
-    } else if (response2 != null) {
-      await sendOrderDetails();
-    } else {
-      setError('error');
-    }
+    return response;
   };
 
   useEffect(() => {
@@ -137,13 +128,11 @@ const CheckOut = () => {
           <div className='shippingDetails'>
             <h4>Please enter your shipping Details</h4>
             <Form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
-                const res = completeOrderTransactions();
-                if (res != null) return;
-                localStorage.removeItem('cartItems');
-                localStorage.removeItem('finalCartStats');
-                window.location.href = '/checkout';
+                updateBookQuantities();
+                sendShippingDetails();
+                sendOrderDetails();
               }}
             >
               <Form.Group
@@ -265,50 +254,47 @@ const CheckOut = () => {
               >
                 COMPLETE ORDER & CHECKOUT
               </ReButton>
+              <AlertDialog
+                isOpen={isOpen}
+                leastDestructiveRef={cancelRef}
+                onClose={onClose}
+              >
+                <AlertDialogOverlay>
+                  <AlertDialogContent>
+                    <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                      Complete Order and CheckOut
+                    </AlertDialogHeader>
 
-              {error && (
-                <AlertDialog
-                  isOpen={isOpen}
-                  leastDestructiveRef={cancelRef}
-                  onClose={onClose}
-                >
-                  <AlertDialogOverlay>
-                    <AlertDialogContent>
-                      <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                        Complete Order and CheckOut
-                      </AlertDialogHeader>
+                    <AlertDialogBody>
+                      Are you sure that you want to complete the order and
+                      checkout?{' '}
+                    </AlertDialogBody>
 
-                      <AlertDialogBody>
-                        Are you sure that you want to complete the order and
-                        checkout?{' '}
-                      </AlertDialogBody>
-
-                      <AlertDialogFooter>
-                        <Button ref={cancelRef} onClick={onClose}>
-                          Review Order
-                        </Button>
-                        <Button
-                          colorScheme='red'
-                          onClick={(e) => {
-                            onClose();
-                            localStorage.removeItem('cartItems');
-                            localStorage.removeItem('finalCartStats');
-                            window.location.href = '/';
-                          }}
-                          ml={3}
-                        >
-                          Complete and Checkout
-                        </Button>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialogOverlay>
-                </AlertDialog>
-              )}
+                    <AlertDialogFooter>
+                      <Button ref={cancelRef} onClick={onClose}>
+                        Review Order
+                      </Button>
+                      <Button
+                        colorScheme='red'
+                        onClick={(e) => {
+                          onClose();
+                          localStorage.removeItem('cartItems');
+                          localStorage.removeItem('finalCartStats');
+                          window.location.href = '/checkout';
+                        }}
+                        ml={3}
+                      >
+                        Complete and Checkout
+                      </Button>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialogOverlay>
+              </AlertDialog>
             </Form>
           </div>
         </div>
       ) : (
-        <div>
+        <div className='cartEmptyDiv'>
           <h3>Cart is empty..! Go ahead and add some books to cart</h3>
         </div>
       )}

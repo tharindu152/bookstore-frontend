@@ -5,7 +5,6 @@ import { ChakraProvider } from '@chakra-ui/react';
 import ProtectedRoute from './utils/ProtectedRoute';
 import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
-import Categories from './pages/other/Categories';
 import SubCategories from './pages/other/SubCategories';
 import Home from './pages/other/Home';
 import Book from './pages/other/Book';
@@ -24,7 +23,6 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>
                 <Route path='/' element={<Home />} />
-                <Route path='/categories/:id/books' element={<Categories />} />
                 <Route
                   path='/subcategories/:id/books'
                   element={<SubCategories />}
